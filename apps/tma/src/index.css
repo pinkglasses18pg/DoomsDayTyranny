@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: "Europa";
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url(/assets/fonts/europa-regular-webfont.woff2) format("woff2");
+  }
+
+  @font-face {
+    font-family: "Europa";
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url(/assets/fonts/europa-bold-webfont.woff2) format("woff2");
+  }
+
+  @font-face {
+    font-family: "Europa";
+    font-style: normal;
+    font-weight: 900;
+    font-display: swap;
+    src: url(/assets/fonts/EuropeBold.woff2) format("woff2");
+  }
+}
+
+@layer base {
+  html {
+    font-family: Europa, system-ui, sans-serif;
+  }
+}
