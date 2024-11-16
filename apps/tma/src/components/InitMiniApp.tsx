@@ -55,24 +55,19 @@
     //const cloudStorage = useCloudStorage();
 
     const newReferrals = useCommonStore((state) => state.newReferrals);
-    //const userInitialized = useCommonStore((state) => state.userInitialized);
+    const userInitialized = useCommonStore((state) => state.userInitialized);
     const isNewUser = useCommonStore((state) => state.isNewUser);
-    const referralCode = useCommonStore((state) => state.referralCode);
+    //const referralCode = useCommonStore((state) => state.referralCode);
 
     console.log("isNewUser : ", isNewUser);
 
     console.log("Retrieved initApp from initMiniApp in the start of file:", initState);
 
-    useEffect(() => {
-      console.log("newReferrals, referralCode :", newReferrals, referralCode);
-
-    }, [newReferrals, referralCode]);
-
 
     useEffect(() => {
       console.log("Retrieved initApp from initMiniApp:", initState);
 
-      if (initState === 'loading') {
+      if (initState === 'loading' && userInitialized) {
         if (isNewUser) {
           setAppState({ initState: 'init', isNewUser: false });
         } else {
@@ -84,7 +79,7 @@
         setAppState({ initState: "referralParent" });
       }
 
-    }, [initState, setAppState, isNewUser, newReferrals.length]);
+    }, [initState, setAppState, isNewUser, newReferrals.length, userInitialized]);
 
     useEffect(() => {
       navigator.attach();
@@ -97,18 +92,18 @@
         <Router location={location} navigator={reactNavigator}>
           <Routes>
             {initState === "referral" ? (
-              <Route path="/" element={<Navigate to="/invite" />} />
+              <Route path="/" element={<Navigate to="/invite" replace />} />
             ) : initState === "init" ? (
-              <Route path="/" element={<Navigate to="/settings" />} />
+              <Route path="/" element={<Navigate to="/settings" replace />} />
             ) : initState === "referralParent" ? (
-                <Route path="/" element={<Navigate to="/ReferralConfirm" />} />
+                <Route path="/" element={<Navigate to="/ReferralConfirm" replace />} />
             ) : null}
             {initState !== "loading" ? (
               <Route path="/" element={<Layout />}>
                 {routes.map((route) => (
                   <Route key={route.path} {...route} />
                 ))}
-                <Route path="*" element={<Navigate to="/" />} />
+                <Route path="*" element={<Navigate to="/" replace />} />
               </Route>
             ) : null}
             <Route path="/settings" element={<Settings />} />

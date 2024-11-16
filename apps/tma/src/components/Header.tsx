@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button } from "@headlessui/react";
 import burger from "@/assets/icons/burger.svg";
 import chip from "@/assets/icons/chip.svg";
-import soft from "@/assets/icons/icon_soft.svg";
+import soft from "@/assets/icons/soft.svg";
 import hard from "@/assets/icons/hard.svg";
 import plus from "@/assets/icons/plus.svg";
 import { abbreviateNumber, abbreviateBytes } from "@/pages/utils";
@@ -15,6 +15,7 @@ import settings from "@/assets/icons/settings.svg";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCommonStore } from "./StoreContext";
+import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
   const [isDrawerOpen, setDrawerOpen] = useState(false);
@@ -25,6 +26,8 @@ export const Header = () => {
   const { t } = useTranslation();
   const initState = useCommonStore((state) => state.initState);
   const setAppState = useCommonStore((state) => state.setAppState);
+
+    const navigate = useNavigate();
 
   const toggleDrawer = () => {
     setDrawerOpen((x) => !x);
@@ -96,20 +99,22 @@ export const Header = () => {
       </div>
 
       <div className="flex flex-grow items-center text-whiteM bg-darkM py-2.5 px-1">
-        <img className="h-4 w-4" src={soft} />
+        <img className="h-6 w-6" src={soft} />
         <span className="text-xs font-bold flex-grow text-center">
           {abbreviateBytes(coin)}
         </span>
       </div>
 
       <div className="flex flex-grow items-center bg-darkM py-2.5 px-1 gap-1">
-        <img className="w-5 h-4" src={hard} />
+        <img className="w-7 h-6" src={hard} />
         <span className="flex-grow text-primaryM text-xs font-bold text-center">
           {abbreviateNumber(mCoin)}
         </span>
 
-        <Button className="w-4 h-4">
+        <Button className="w-6 h-6"
+                onClick={() => navigate("/crypto")}>
           <img src={plus} />
+
         </Button>
       </div>
     </div>

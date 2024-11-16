@@ -1,3 +1,5 @@
+// apps/tma/src/pages/store/gameSlice.ts
+
 import {
   ConfigItem,
   ConfigSlice,

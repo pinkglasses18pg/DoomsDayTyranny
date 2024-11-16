@@ -2,19 +2,20 @@ import { Route } from "./types";
 import {
   ProductionPage,
   MarketPage,
-  TendersPage,
+  MapPage,
   CommunityPage,
   ProductionItem,
+  Crypto,
 } from "./LazyComponents";
-import mining from "@/assets/icons/mining.svg";
+import mining from "@/assets/icons/icon_mining.svg";
 import world from "@/assets/icons/world_icon.svg";
-import building from "@/assets/icons/factory.svg";
-import commutity from "@/assets/icons/comunity.svg";
+import building from "@/assets/icons/icon_quest.svg";
+import commutity from "@/assets/icons/icon_comunity.svg";
 
 export const routes: Route[] = [
   {
     path: "/",
-    Component: TendersPage,
+    Component: MapPage,
     title: "world",
     icon: world,
     nav: true,
@@ -44,6 +45,11 @@ export const routes: Route[] = [
   {
     path: "/mine/:mine",
     Component: ProductionItem,
+    nav: false,
+  },
+  {
+    path: "/crypto",
+    Component: Crypto,
     nav: false,
   },
 ];

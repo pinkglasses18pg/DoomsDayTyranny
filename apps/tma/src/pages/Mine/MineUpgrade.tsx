@@ -1,3 +1,6 @@
+// apps/tma/src/pages/Mine/MineUpgrade.tsx
+
+import React from 'react';
 import { Button } from "@headlessui/react";
 import upIcon from "@/assets/icons/up.svg";
 import soft from "@/assets/icons/icon_soft.svg";
@@ -20,7 +23,7 @@ import { useTranslation } from "react-i18next";
 import { useSound } from "@/components/sound";
 import { useCommonStore } from "@/components/StoreContext";
 
-const UpgradeButton = ({
+const UpgradeButton = React.memo(({
   price,
   onClick,
   disabled,
@@ -55,9 +58,9 @@ const UpgradeButton = ({
       </Button>
     </div>
   );
-};
+});
 
-const TitleLevel = ({
+const TitleLevel = React.memo(({
   level,
   title,
   icon,
@@ -85,7 +88,7 @@ const TitleLevel = ({
       </div>
     </div>
   );
-};
+});
 
 type NA = "N/A";
 
@@ -98,12 +101,11 @@ export const MineUpgrade = ({
 }) => {
   const soundInstance = useSound("upgrade");
   const { t } = useTranslation();
-  const { store, fabric, worker, mines } = useCommonStore((state) => ({
-    fabric: state.updateSpeedProductivity,
-    store: state.updateStore,
-    worker: state.hireWorker,
-    mines: state.mines,
-  }));
+
+  const store = useCommonStore(state => state.updateStore);
+  const fabric = useCommonStore(state => state.updateSpeedProductivity);
+  const worker = useCommonStore(state => state.hireWorker);
+  const mines = useCommonStore(state => state.mines);
 
   const isImposibleUpdatestore = useImpossibleUpdateStore(resource.resource.id);
   const isImposibleUpdateProductivity = useImposibleUpdateProductivity(resource.resource.id);
@@ -111,7 +113,7 @@ export const MineUpgrade = ({
 
   const mine = mines[resource.resource.id];
 
-  const items = [
+  const items = React.useMemo(() =>[
     {
       title: t("stoke"),
       level: mine ? mine.levelStore + 1 : 1,
@@ -164,7 +166,19 @@ export const MineUpgrade = ({
       },
       disabled: disabled || isImposibleHire,
     },
-  ];
+  ], [
+    t,
+    mine,
+    resource,
+    store,
+    fabric,
+    worker,
+    disabled,
+    isImposibleUpdatestore,
+    isImposibleUpdateProductivity,
+    isImposibleHire,
+    soundInstance
+  ]);
   return (
     <div className="flex gap-1.5 px-2 w-full">
       {items.map(

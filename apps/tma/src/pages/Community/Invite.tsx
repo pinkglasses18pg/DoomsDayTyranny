@@ -1,6 +1,6 @@
 // apps/tma/src/pages/Community/Invite.tsx
 
-import React, { useEffect,  useState } from "react";
+import React, { useEffect,  useState, useCallback } from "react";
 
 // import workers_frame from "@/assets/icons/workers_frame.svg";
 import { useNavigate } from "react-router-dom";
@@ -10,12 +10,10 @@ import { app } from "@/store/firebase";
 import { useCommonStore } from "@/components/StoreContext";
 
 const InvitePage: React.FC = () => {
-  const {mines, coin, mCoin} = useCommonStore((state) => ({
-    mines: state.mines,
-    coin: state.coin,
-    mCoin: state.mCoin,
-  }));
-  //const setAppState = useCommonStore((state) => state.setAppState);
+  const mines = useCommonStore((state) => state.mines);
+  const coin = useCommonStore((state) => state.coin);
+  const mCoin = useCommonStore((state) => state.mCoin);
+  const setAppState = useCommonStore((state) => state.setAppState);
   const init = useCommonStore((state) => state.init);
 
   //const [referralCode, setReferralCode] = useState<string | null>(null);
@@ -33,20 +31,9 @@ const InvitePage: React.FC = () => {
 
   const referralCode = useCommonStore((state) => state.referralCode);
 
-
-  useEffect(() => {
-    // Retrieve referral code from cloudStorage
-      if (referralCode) {
-        console.log("ReferralCode: ", referralCode);
-      } else {
-        console.log("No referral code found.");
-      }
-
-  });
-
   const [fetchUserById] = useHttpsCallable(getFunctions(app), 'getUserById');
 
-  const fetchUser = async () => {
+  const fetchUser = useCallback(async () => {
     if (!isReaded && referralCode) {
       try {
         setIsReaded(true);
@@ -58,11 +45,24 @@ const InvitePage: React.FC = () => {
         console.error("Error fetching user:", err);
       }
     }
-  };
+  }, [isReaded, referralCode, fetchUserById]);
 
-  fetchUser();
 
-  const handleTakeReward = () => {
+  useEffect(() => {
+    // Retrieve referral code from cloudStorage
+      if (referralCode) {
+        console.log("ReferralCode: ", referralCode);
+      } else {
+        console.log("No referral code found.");
+      }
+
+  });
+
+  useEffect(() => {
+    fetchUser();
+  }, [fetchUser]);
+
+  const handleTakeReward = useCallback(() => {
 
     if (!referralCode || !userData || !isReaded) {
       console.error("Required data is missing");
@@ -81,6 +81,7 @@ const InvitePage: React.FC = () => {
       .then((result) => {
           if (result && result.data) {
         console.log("Data saved successfully:", result.data);
+        setAppState({ initState : "langSetted"});
         navigate("/"); // Перенаправление на главную страницу после успешного сохранения
         } else {
       console.error("No data returned from callable function.");
@@ -90,33 +91,36 @@ const InvitePage: React.FC = () => {
         console.error("Error saving data:", error);
       });
   navigate("/"); // Simplified navigation
-  };
+  }, [referralCode, userData, isReaded, coin, mCoin, mines, init, executeCallable, navigate, setAppState]);
 
 
 
   return (
-    <div style={styles.container}>
-      <div style={styles.logoWrapper}>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-darkM text-whiteM font-roboto p-5">
+      <div className="mb-5">
         <img
           src="./assets/icons/workers_frame.svg" // Заменить на актуальный путь к иконке
           alt="Radiation Logo"
-          style={styles.logo}
+          className="w-20 h-20"
         />
       </div>
-      <h1 style={styles.congratulations}>Congratulations!</h1>
+      <h1 className="text-2xl mb-2">Congratulations!</h1>
       {referralCode ? (
-        <h1>Now you work at the uranium mine of the player {userData?.user?.username || null}</h1>
-      ) : (
+        <h1>Now you work at the uranium mine of the player
+          <span className="text-yellow-500">{userData?.user?.username || null}</span>
+        </h1>
+        ) : (
         <h1>No referral code available.</h1>
       )}
-      <p style={styles.rewardLabel}>Your reward</p>
-      <p style={styles.rewardAmount}>666 ¥</p>
-      <button style={styles.takeButton} onClick={handleTakeReward}>Take</button>
+      <p className="text-lg mb-1">Your reward</p>
+      <p className="text-5xl font-bold text-white mb-10">666 ¥</p>
+      <button className="bg-yellow-500 text-black rounded-lg px-8 py-3 text-lg hover:opacity-90"
+              onClick={handleTakeReward}>Take</button>
     </div>
   );
 };
 
-const styles = {
+/*const styles = {
   container: {
     backgroundColor: "#1A1A1A", // Тёмный фон
     color: "white",
@@ -166,6 +170,6 @@ const styles = {
     fontSize: "20px",
     cursor: "pointer",
   },
-};
+};*/
 
 export default InvitePage;

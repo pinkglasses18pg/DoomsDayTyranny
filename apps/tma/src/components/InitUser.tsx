@@ -34,7 +34,7 @@ export const InitUser = ({ children }: PropsWithChildren) => {
   const buyMine = useCommonStore((state) => state.buyMine);
   const tick = useCommonStore((state) => state.tick);
   const cloudStorage = useCloudStorage();
-  const initState = useCommonStore((state) => state.initState);
+  //const initState = useCommonStore((state) => state.initState);
   const setAppState = useCommonStore((state) => state.setAppState);
 
   const setConfig = useCommonStore((state) => state.setConig);
@@ -54,8 +54,6 @@ export const InitUser = ({ children }: PropsWithChildren) => {
   >(functions, "getNewReferrals");
 
   const init_referral_code = useCallback(async () => {
-    // Wait for `userInitialized` flag in cloudStorage
-    //if (!userInitialized) return;  // Exit if user is not initialized
 
     let referralCode_: string | null = null; // Explicitly typed
     if (window.location.search) {
@@ -113,11 +111,14 @@ export const InitUser = ({ children }: PropsWithChildren) => {
         buyMine(config[1].resource.id);
         buyMine(config[2].resource.id);
         setAppState({isNewUser: true});
+        setAppState({userInitialized: true});
         return;
       }
 
-      console.log("initState from initUser.tsx : ", initState);
+      //console.log("initState from initUser.tsx : ", initState);
       //console.log("isNewUser is : ", isNewUser);
+
+      console.log("next will gameStats");
 
       try {
         if (!result.data.gameStats) {
@@ -141,6 +142,8 @@ export const InitUser = ({ children }: PropsWithChildren) => {
         console.error("Error processing gameStats:", e);
       }
 
+      console.log("next will New referrals check");
+
       // После инициализации пользователя проверяем наличие новых рефералов
       try {
         // Вызываем бэкенд-функцию для получения новых рефералов
@@ -163,7 +166,7 @@ export const InitUser = ({ children }: PropsWithChildren) => {
       } catch (error) {
         console.error("Error fetching new referrals:", error);
       }
-
+      console.log("userInitialized next:");
       // Set initialization flag after completing user setup
       setAppState({userInitialized: true});
 
@@ -173,7 +176,7 @@ export const InitUser = ({ children }: PropsWithChildren) => {
     execute();
 
   }, [initData, initUserCallback, buyMine, init, setConfig, cloudStorage, init_referral_code,
-    setAppState, tick, getNewReferrals, initState]);
+    tick, getNewReferrals]);
 
   useEffect(() => {
     cloudStorage.get("languageCode").then((value) => {

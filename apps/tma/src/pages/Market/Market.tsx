@@ -1,3 +1,4 @@
+// apps/tma/src/pages/Market/Market.tsx
 import { Link } from "react-router-dom";
 import { abbreviateBytes } from "../utils";
 import { useTranslation } from "react-i18next";
@@ -8,8 +9,8 @@ const Market = () => {
   const mines = useCommonStore((state) => state.mines);
   const { t } = useTranslation();
 
-  console.log("LOGS MARKET :: availableMines : ", availableMines);
-  console.log("LOGS MARKET :: mines : ", mines);
+  //console.log("LOGS MARKET :: availableMines : ", availableMines);
+  //console.log("LOGS MARKET :: mines : ", mines);
   return (
     <div className="flex flex-col pb-8 gap-2">
       {availableMines

@@ -61,9 +61,9 @@ const Settings = () => {
           console.log("referral code from settings = ", referralCode);
                 setAppState({ initState: "referral" });
                 }
-    if (initState === "init") {
-      console.log("change initState from settings = ", referralCode);
-      setAppState({ initState: "langSetted" as InitState });
+      else if (initState === "init") {
+        console.log("change initState from settings = ", referralCode);
+        setAppState({ initState: "langSetted" as InitState });
     }
     navigate("/");
   };

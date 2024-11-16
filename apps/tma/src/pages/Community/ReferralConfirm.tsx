@@ -41,15 +41,15 @@ const ReferralConfirmPage: React.FC = () => {
 
 
   return (
-    <div style={styles.container}>
-      <div style={styles.logoWrapper}>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-darkM text-whiteM font-roboto p-5">
+      <div className="mb-5">
         <img
           src="./assets/icons/workers_frame.svg" // Заменить на актуальный путь к иконке
           alt="Radiation Logo"
-          style={styles.logo}
+          className="w-20 h-20"
         />
       </div>
-      <h1 style={styles.congratulations}>Congratulations!</h1>
+      <h1 className="text-2xl mb-2">Congratulations!</h1>
       {newReferrals ? (
           <div>
             <h2>There are new Workers Joined Your Uranium Mine:</h2>
@@ -65,12 +65,13 @@ const ReferralConfirmPage: React.FC = () => {
           <h1>No referral code available.</h1>
       )}
 
-      <button style={styles.takeButton} onClick={handleTakeReward}>Great</button>
+      <button className="bg-yellow-500 text-black rounded-lg px-8 py-3 text-lg hover:opacity-90"
+              onClick={handleTakeReward}>Great</button>
     </div>
   );
 };
 
-const styles = {
+/*const styles = {
   container: {
     backgroundColor: "#1A1A1A", // Тёмный фон
     color: "white",
@@ -120,6 +121,6 @@ const styles = {
     fontSize: "20px",
     cursor: "pointer",
   },
-};
+};*/
 
 export default ReferralConfirmPage;

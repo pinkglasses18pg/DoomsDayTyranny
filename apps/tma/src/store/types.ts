@@ -121,3 +121,19 @@ export type MyAppStateCreator = ImmerStateCreator<Store>;
 export type SliceCreator<TSlice extends keyof Store> = (
   ...params: Parameters<MyAppStateCreator>
 ) => Pick<ReturnType<MyAppStateCreator>, TSlice>;
+
+export type TileType = {
+  id: string;
+  x: number;
+  y: number;
+  owner: string;
+  hasEvent: boolean;
+  eventId?: string;
+}
+
+export type MapType = {
+  id: string;
+  tiles: TileType[];
+  tileSetId: string;
+  startPoint: number;
+}

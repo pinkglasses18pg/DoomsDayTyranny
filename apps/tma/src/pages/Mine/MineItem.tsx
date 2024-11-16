@@ -1,3 +1,6 @@
+// apps/tma/src/pages/Mine/MineItem.tsx
+
+import React, { useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { ConfigItem } from "@/store/types";
 import { Button } from "@headlessui/react";
@@ -21,8 +24,15 @@ const ProductionItem = () => {
   if (!mine) {
     return <p className="text-white">Not Found</p>;
   }
-  const mineInstance = availableMines.find((m) => m.resource.id === mine);
-  const isBought = mines[mine] !== undefined;
+  // Мемоизация поиска mineInstance
+  const mineInstance = useMemo(() => {
+    return mine ? availableMines.find((m) => m.resource.id === mine) : undefined;
+  }, [availableMines, mine]);
+
+  // Мемоизация определения, куплена ли шахта
+  const isBought = useMemo(() => {
+    return mine ? mines[mine] !== undefined : false;
+  }, [mine, mines]);
 
   if (mineInstance === undefined) {
     return <p className="text-white">Not Found</p>;
@@ -31,7 +41,7 @@ const ProductionItem = () => {
   return <BaseProduction resource={mineInstance} isBought={isBought} />;
 };
 
-const BaseProduction = ({
+const BaseProduction = React.memo(({
   resource,
   isBought,
 }: {
@@ -51,18 +61,18 @@ const BaseProduction = ({
       {isBought ? <SellAll resource={resource} /> : <BuyMine mine={resource} />}
     </div>
   );
-};
+});
 
-const BuyMine = ({ mine }: { mine: ConfigItem }) => {
+const BuyMine = React.memo(({ mine }: { mine: ConfigItem }) => {
   const { t } = useTranslation();
   const soundInstance = useSound("buyFabric");
   const mines = useCommonStore((state) => state.mines);
   const coin = useCommonStore((state) => state.coin);
   const buyMine = useCommonStore((state) => state.buyMine);
-  const buyThisMyne = () => {
+  const buyThisMyne = React.useCallback(() => {
     buyMine(mine.resource.id);
     soundInstance?.play();
-  };
+  }, [buyMine, mine.resource.id, soundInstance]);
 
   const disabled = !!mines[mine.resource.id] || coin < mine.unlockPrice;
 
@@ -75,9 +85,9 @@ const BuyMine = ({ mine }: { mine: ConfigItem }) => {
       price={abbreviateBytes(mine.unlockPrice)}
     />
   );
-};
+});
 
-const SellAll = ({ resource }: { resource: ConfigItem }) => {
+const SellAll = React.memo(({ resource }: { resource: ConfigItem }) => {
   const { t } = useTranslation();
   const soundInstance = useSound("sellResurce");
   const sellStore = useCommonStore((state) => state.sellStore);
@@ -92,6 +102,8 @@ const SellAll = ({ resource }: { resource: ConfigItem }) => {
     soundInstance?.play();
   };
 
+
+
   return (
     <ActionButton
       isMiracleCoin={resource.sellIsMiriclaCoint}
@@ -101,9 +113,9 @@ const SellAll = ({ resource }: { resource: ConfigItem }) => {
       price={`+${abbreviateBytes(mine.store.count * resource.sellPrice)}`}
     />
   );
-};
+});
 
-const ActionButton = ({
+const ActionButton = React.memo(({
   isMiracleCoin,
   disabled,
   onClick,
@@ -141,6 +153,6 @@ const ActionButton = ({
       {isMiracleCoin && <img src={hardIcon} className="w-6 h-6" />}
     </div>
   </Button>
-);
+));
 
 export default ProductionItem;

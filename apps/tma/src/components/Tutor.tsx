@@ -36,10 +36,9 @@ useEffect(() => {
 }, [tutorialShown]);
 
     useEffect(() => {
-        console.log("initApp from tutor.tsx : ", initState);
-
         if (initState === "langSetted" &&
             !tutorialShownRef.current ) {
+            console.log("initApp from tutor.tsx : ", initState);
             if (i18n.language === "ru") {
                 setImage(ruImages);
             } else {
