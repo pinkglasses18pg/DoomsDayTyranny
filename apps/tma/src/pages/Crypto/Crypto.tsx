@@ -2,6 +2,7 @@
 
     import React from "react";
     import { useTranslation } from "react-i18next";
+    import TonWalletButton from "@/components/TonWalletButton";
     //import offer_icon from "@assets/offer.svg";
 
     const CryptoPage: React.FC = () => {
@@ -59,14 +60,8 @@
                 {/* Connect TON Wallet */}
                 <div className="flex flex-col flex-grow items-center justify-center mt-1 bg-secondDark p-4">
                     <hr className="w-full border-gray-600 mb-1"/>
-                    <button className="bg-grayM text-darkM px-6 py-3 text-lg w-full"
-                            onClick={() => console.log("pressed Connect TON wallet button")}
-                    >
-
-                        <img src="assets/exchange_button.svg" alt="Connect TON wallet"
-                             className="absolute w-full h-full "/>
+                    <TonWalletButton />
                         <span className="relative text-black font-bold">{t("Connect TON wallet")}</span>
-                    </button>
                 </div>
             </div>
         );

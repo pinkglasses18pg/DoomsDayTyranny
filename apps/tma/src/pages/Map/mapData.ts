@@ -3,7 +3,7 @@ import {TileType} from "@/store/types.ts";
 
 export const mapData: TileType[] = [
     // Y = 1
-    { id: '1-1', x: 1, y: 1, owner: 'player', hasEvent: false }, // Стартовый тайл игрока
+    { id: '1-1', x: 1, y: 1, owner: 'human', hasEvent: false }, // Стартовый тайл игрока
     { id: '1-2', x: 2, y: 1, owner: 'human', hasEvent: false },
     { id: '1-3', x: 3, y: 1, owner: 'human', hasEvent: true },
     { id: '1-4', x: 4, y: 1, owner: 'human', hasEvent: false },
@@ -37,7 +37,7 @@ export const mapData: TileType[] = [
     { id: '3-4', x: 4, y: 3, owner: 'human', hasEvent: false },
     { id: '3-5', x: 5, y: 3, owner: 'human', hasEvent: true },
     { id: '3-6', x: 6, y: 3, owner: 'human', hasEvent: false },
-    { id: '3-7', x: 7, y: 3, owner: 'human', hasEvent: false },
+    { id: '3-7', x: 7, y: 3, owner: 'player', hasEvent: false },
     { id: '3-8', x: 8, y: 3, owner: 'human', hasEvent: false },
     { id: '3-9', x: 9, y: 3, owner: 'human', hasEvent: true },
     { id: '3-10', x: 10, y: 3, owner: 'human', hasEvent: false },
@@ -128,3 +128,5 @@ export const mapData: TileType[] = [
     { id: '9-11', x: 11, y: 9, owner: 'human', hasEvent: false },
     { id: '9-12', x: 12, y: 9, owner: 'human', hasEvent: false },
 ];
+
+

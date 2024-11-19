@@ -1,24 +1,35 @@
 // src/components/Map.tsx
 import React, { useState } from 'react';
-//import Tile from './Tile';
 import { TileType} from '@/store/types';
-import { mapData } from './mapData';
+//import { mapData } from './mapData';
 import { TransformWrapper, TransformComponent} from 'react-zoom-pan-pinch';
 import EventScreen from './EventScreen'; // В будущем реализуем
 import Tile from './Tile';
+import { EventType } from '@/store/types';
+
+import rawEventConfig from '@/event_config.json'; // TO DO REFACTOR
+import { generateMapData } from "@/pages/Map/MapDataGeneration";
+
+const mapData = generateMapData();
 
 const Map: React.FC = () => {
     const [selectedTile, setSelectedTile] = useState<TileType | null>(null);
+    const events: EventType[] = (rawEventConfig as { event: EventType }[]).map((item) => item.event);
+
+
+
+    //console.log("MapData : ", mapData);
 
     const handleTileClick = (tile: TileType) => {
         setSelectedTile(tile);
         // В будущем: открыть экран ивента
     };
 
-    // Вычисляем начальные позиции для отображения центрального тайла
-    const { initialX, initialY } = calculateInitialPosition();
-    console.log("initialX", initialX);
-    console.log("initialY", initialY);
+    const getEventForTile = (tileId: string) => {
+        return events.find((event) =>
+            event.generation.tileList.includes(tileId)
+        );
+    };
 
 
     return (
@@ -64,9 +75,17 @@ const Map: React.FC = () => {
                             backgroundColor: 'black',
                         }}
                     >
-                        {mapData.map((tile) => (
-                            <Tile key={tile.id} tile={tile} onClick={handleTileClick} />
-                        ))}
+                        {mapData.map((tile) => {
+                            const event = getEventForTile(tile.id); // Correct syntax for declaring a variable
+                            return (
+                            <Tile
+                            key={tile.id}
+                            tile={tile}
+                            onClick={handleTileClick}
+                            event={event} // Pass the event object to the Tile component
+                             />
+                    );
+                    })}
                     </div>
                 </TransformComponent>
             </TransformWrapper>
@@ -87,19 +106,19 @@ const calculateMapHeight = (): number => {
 };
 
 // Функция для вычисления начального положения, чтобы отображать центральный тайл
-const calculateInitialPosition = () => {
+/*const calculateInitialPosition = () => {
     const mapWidth = calculateMapWidth();
     const mapHeight = calculateMapHeight();
 
-    console.log("mapWidth=", mapWidth);
-    console.log("mapHeight=", mapHeight);
+    //console.log("mapWidth=", mapWidth);
+    //console.log("mapHeight=", mapHeight);
 
     // Находим центральное положение карты, чтобы начать отображение с середины
     const initialX = -(mapWidth / 2 - window.innerWidth / 2);
     const initialY = -(mapHeight / 2 - window.innerHeight / 2);
 
     return { initialX, initialY };
-};
+};*/
 
 export default Map;
 

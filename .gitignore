@@ -4,3 +4,5 @@ funstions/package-lock.json
 apps/tma/node_modules/
 node_modules/
 package-lock.json
+apps/tma/.turbo/
+.turbo/

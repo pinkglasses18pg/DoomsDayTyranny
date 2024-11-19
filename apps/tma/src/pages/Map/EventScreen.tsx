@@ -1,4 +1,5 @@
 // src/components/EventScreen.tsx
+
 import React from 'react';
 import {TileType} from "@/store/types.ts";
 

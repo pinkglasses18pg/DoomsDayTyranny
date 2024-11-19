@@ -1,16 +1,17 @@
 // src/components/Tile.tsx
 import React from 'react';
-import { TileType } from '@/store/types';
+import {EventType, TileType} from '@/store/types';
 import TileOverlay from './TileOverlay.tsx';
 
 interface TileProps {
     tile: TileType;
     onClick: (tile: TileType) => void;
+    event: EventType | undefined; // Updated type
 }
 
-const Tile: React.FC<TileProps> = ({ tile, onClick }) => {
+const Tile: React.FC<TileProps> = ({ tile, onClick, event }) => {
     const handleClick = () => {
-        if (tile.hasEvent) {
+        if (tile.hasEvent || event) {
             onClick(tile);
         }
     };
@@ -35,6 +36,31 @@ const Tile: React.FC<TileProps> = ({ tile, onClick }) => {
     style={{ display: 'block' }}
     />
     <TileOverlay owner={tile.owner as 'player' | 'human'} />
+
+            {/* Иконка ивента, если есть */}
+            {event && (
+                <div
+                    style={{
+                        position: 'absolute',
+                        top: '0%', // Центрируем внутри тайла
+                        left: '0%',
+                        width: '78px',
+                        height: '78px',
+                        backgroundImage: `url(${event.iconBg})`, // Фон из iconBg
+                        backgroundSize: 'cover',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <img
+                        src={event.icon}
+                        alt={event.name}
+                        style={{ width: '100%', height: '100%' }} // Иконка внутри iconBg
+                    />
+                </div>
+                )}
+
     </div>
 );
 };
