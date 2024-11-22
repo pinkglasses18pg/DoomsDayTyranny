@@ -1,11 +1,23 @@
 {
-  "factory": "Factory",
+   "factory": "Factory",
   "price": "Price",
-  "production": "Production",
+  "industry": "Industry",
+  "electronics": "Greenland",
+  "production": "Factories",
   "market": "Market",
   "tenders": "Tenders",
-  "community": "Community",
+  "community": "Community"
 
+  "stoke": "Stoke",
+  "tools": "Tools",
+  "workers": "Automatons",
+  "cycle": "Cycle",
+  "result": "Result",
+  "income": "Income",
+  "expense": "Expense",
+  "buy": "Buy",
+  "sell": "Sell",
+  
   "industry": "industry",
   "electronics": "Electronic",
   "pharmaceuticals":"Pharmaceuticals",
@@ -25,17 +37,7 @@
   "english2":"English",
   "russian":"Russian",
   "russian2":"Русский",
-
-  "stoke": "Stoke",
-  "tools": "Tools",
-  "workers": "Automatons",
-  "cycle": "Cycle",
-  "result": "Result",
-  "income": "Income",
-  "expense": "Expense",
-  "buy": "Buy",
-  "sell": "Sell",
-
+ 
   "sand": "Oil",
   "sandFactory": "Oil production",
   "glass": "Plastic polymer",
@@ -89,4 +91,24 @@
   "megaprojectDescription1": "In megaprojects, you and your teammates must complete the assigned tasks within a limited time. If you meet the deadline, you'll receive a generous reward. Otherwise, you lose your initial stake and all invested resources.",
   "megaprojectDescription2": "To participate in a megaproject, you must either organize it yourself or join an existing one. The organizer of the megaproject covers the costs of launching it. If the megaproject is successfully completed, the organizer will receive the largest reward."
 
+ "helpfulLinks": "Helpful Links",
+  "mainChannel": "Main Channel",
+  "mainChannelDescription": "In this channel, you'll get the latest news about exclusive content and new features",
+  "alphaChannel": "Alpha Channel",
+  "alphaChannelDescription": "Insider channel that only the first 1000 players can join",
+  "friends": "Friends",
+  "workers": "Workers",
+  "inviteFriendReward": "Invite 1 friend to unlock the uranium mine",
+  "invite": "Invite",
+  "inviteFriends": "Invite Friends",
+  "copyLink": "Copy Link"
+  
+  "congratulations": "Congratulations!",
+  "newWorkers": "There are new Workers Joined Your Uranium Mine:",
+  "great": "Great"
+  
+  "congratulations": "Congratulations!",
+  "workAtUraniumMine": "Now you work at the uranium mine of the player",
+  "yourReward": "Your reward",
+  "take": "Take"
 }

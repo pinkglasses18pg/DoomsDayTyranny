@@ -8,13 +8,14 @@ import "./internationalization";
 import { useCloudStorage } from "@tma.js/sdk-react";
 import { useRef } from "react";
 import { createStore } from "@/store/store";
-import { StoreContext, StoreContextType } from "./StoreContext";
+import {StoreContext, StoreContextType } from "./StoreContext";
 
 const InitMiniApp = lazy(() => import("./InitMiniApp"));
 
 export const App: FC = () => {
   const cloudStorage = useCloudStorage();
   const storeRef = useRef<StoreContextType | null>(null);
+  //const initState = useCommonStore((state) => state.initState);
 
   useMemo(() => {
     if (!storeRef.current) {
@@ -25,12 +26,14 @@ export const App: FC = () => {
 
   return (
     <StoreContext.Provider value={storeRef.current}>
+
       <InitUser>
         <SaveGame />
         <Suspense fallback={<LoadIndicator />}>
           <InitMiniApp />
         </Suspense>
       </InitUser>
+
     </StoreContext.Provider>
   );
 };

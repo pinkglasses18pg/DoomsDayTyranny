@@ -12,6 +12,7 @@ import useHttpsCallable from "@/store/useHttpsCallable";
 import { useTranslation } from "react-i18next";
 import { ConfigItem, GetNewReferralsResponse } from "@/store/types";
 import { useCommonStore } from "./StoreContext";
+import { LoadIndicator } from "./LoadIndicator";
 
 export const ExpancedViewport = () => {
   const viewport = useViewport();
@@ -34,8 +35,10 @@ export const InitUser = ({ children }: PropsWithChildren) => {
   const buyMine = useCommonStore((state) => state.buyMine);
   const tick = useCommonStore((state) => state.tick);
   const cloudStorage = useCloudStorage();
+  const setMapData = useCommonStore((state) => state.setMapData);
   //const initState = useCommonStore((state) => state.initState);
   const setAppState = useCommonStore((state) => state.setAppState);
+  const initializeMap = useCommonStore((state) => state.initializeMap);
 
   const setConfig = useCommonStore((state) => state.setConig);
   const { i18n } = useTranslation();
@@ -106,10 +109,16 @@ export const InitUser = ({ children }: PropsWithChildren) => {
       console.log("FROM InitUser : result: ", result.data.status);
       if (result.data.status === "created") {
 
-        init(0, 0, {});
-        buyMine(config[0].resource.id);
-        buyMine(config[1].resource.id);
-        buyMine(config[2].resource.id);
+        init(200000, 0, {"sand":{"id":"sand","store":{"count":500},
+            "maxStore":1000,"levelStore":0,"usagePerMinute":0,"passive":
+                {"currentSpeedProductiviy":1,"workerCount":0,"fabricGrade":0,"currentProduceTime":4,
+                  "progress":0,"craftPerMinute":0}},"glass":{"id":"glass","store":{"count":2000},
+            "maxStore":2250,"levelStore":0,"usagePerMinute":0,"passive":{"currentSpeedProductiviy":1,
+              "workerCount":0,"fabricGrade":0,"currentProduceTime":16,"progress":0,"craftPerMinute":0}},
+          "sandglass":{"id":"sandglass","store":{"count":0},"maxStore":600,"levelStore":0,"usagePerMinute":0,
+            "passive":{"currentSpeedProductiviy":1,"workerCount":0,"fabricGrade":0,"currentProduceTime":16,
+              "progress":0,"craftPerMinute":0}}});
+        initializeMap(12, 9, 8, 2);
         setAppState({isNewUser: true});
         setAppState({userInitialized: true});
         return;
@@ -125,10 +134,23 @@ export const InitUser = ({ children }: PropsWithChildren) => {
           throw new Error("gameStats is empty");
         }
 
+        if (!result.data.mapData) {
+          console.log("mapData is empty");
+        }
+
         const gameStats = JSON.parse(result.data.gameStats);
+
         const ticks = result.data.ticks;
 
         const { mines, coin, mCoin } = gameStats;
+
+
+        if (result.data.mapData) {
+          const mapData_ = JSON.parse(result.data.mapData);
+          setMapData(mapData_);
+        } else {
+          initializeMap(12, 9, 8, 2);
+        }
 
         if (!mines) throw new Error("Invalid gameStats");
 
@@ -176,7 +198,7 @@ export const InitUser = ({ children }: PropsWithChildren) => {
     execute();
 
   }, [initData, initUserCallback, buyMine, init, setConfig, cloudStorage, init_referral_code,
-    tick, getNewReferrals]);
+    tick, getNewReferrals, setMapData, initializeMap]);
 
   useEffect(() => {
     cloudStorage.get("languageCode").then((value) => {
@@ -193,7 +215,7 @@ export const InitUser = ({ children }: PropsWithChildren) => {
   return (
     <>
       <ExpancedViewport />
-      {loading ? null : children}
+      {loading ? <LoadIndicator /> : children}
     </>
   );
 };

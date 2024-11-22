@@ -18,14 +18,18 @@ export type ResultInit = {
  * resolves to an object indicating the status of user initialization.
  */
 export async function save(
-  payload: { userId: string; gameStats: string; referredParent?: string }
+  payload: { userId: string;
+    gameStats: string;
+    mapData: string,
+    referredParent?: string }
 ): Promise<{ status: string }> {
-  const {userId, gameStats, referredParent} = payload;
+  const {userId, gameStats, mapData, referredParent} = payload;
   const userRef = db.collection("users").doc(userId);
   const userDoc = await userRef.get();
 
   const updateData: any = {
     gameStats,
+    mapData,
     lastUpdate: Date.now(),
   };
 

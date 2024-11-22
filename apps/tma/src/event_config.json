@@ -1,0 +1,348 @@
+[	{
+		"event": {
+			"id": "humanArmy_1",
+			"name": "Human Army",
+			"type": "Capture",
+			"description": "The leather bags landed a tank army. According to the information from the reconnaissance drones, there are 20-40 tanks, so we should send our troops there with reserves.",
+			"image": "assets/event/humanArmy_1.png",
+			"questImage": "assets/copper.png",
+			"icon": "assets/mapIcons/event_icon_solderst1.svg",
+			"iconBg": "assets/mapIcons/map_icon_bg_hexagon_red.svg",
+			"relatedEvents": [
+				"humanArmy_2"
+			],
+			"craftEvent": [
+				{
+					"id": "sand",
+					"image": "assets/sand.png",
+					"count": 5
+				},
+				{
+					"id": "glass",
+					"image": "assets/glass.png",
+					"count": 100
+				}
+			],
+			"price": 10000,
+			"difficulty": {
+				"baseChance": 0.5,
+				"tryMultiplay": 1.1
+			},
+			"generation": {
+				"tileList": [
+					"3-5",
+					"5-5"
+				],
+				"weight": 2,
+				"isFixedEvent": false
+			},
+			"rewards": {
+				"hardReward": 0,
+				"softReward": 100000,
+				"resourceReward": []
+			}
+		}
+	},
+	{
+	 "event": {
+		 "id": "humanArmy_2",
+		 "name": "human Army 2",
+		 "type": "Capture",
+		 "description": "Part2",
+		 "image": "assets/event/humanArmy_1.png",
+		 "questImage": "assets/copper.png",
+		 "icon": "assets/mapIcons/event_icon_solderst2.svg",
+		 "iconBg": "assets/mapIcons/map_icon_bg_hexagon_red.svg",
+		 "relatedEvents": [],
+		 "craftEvent": [
+			 {
+				 "id": "sand",
+				 "image": "assets/sand.png",
+				 "count": 5
+			 }
+		 ],
+		 "price": 100000,
+		 "difficulty": {
+			 "baseChance": 0.4,
+			 "tryMultiplay": 1.1
+		 },
+		 "generation": {
+			 "tileList": [],
+			 "weight": 1,
+			 "isFixedEvent": false
+		 },
+		 "rewards": {
+			 "hardReward": 100,
+			 "softReward": 0,
+			 "resourceReward": []
+		 }
+	 }
+	 },
+	{
+    "event": {
+		"id": "humanArmy_3",
+		"name": "Human Army",
+		"type": "Capture",
+		"description": "Human Army 3 war",
+		"image": "assets/event/humanArmy_1.png",
+		"questImage": "assets/copper.png",
+		"icon": "assets/mapIcons/event_icon_solderst3.svg",
+		"iconBg": "assets/mapIcons/map_icon_bg_hexagon_red.svg",
+		"relatedEvents": [],
+		"craftEvent": [
+			{
+				"id": "sand",
+				"image": "assets/sand.png",
+				"count": 5
+			},
+			{
+				"id": "glass",
+				"image": "assets/glass.png",
+				"count": 100
+			}
+		],
+		"price": 10000,
+		"difficulty": {
+			"baseChance": 0.5,
+			"tryMultiplay": 1.1
+		},
+		"generation": {
+			"tileList": [
+				"3-6",
+				"3-7",
+				"3-8",
+				"3-9",
+				"3-10",
+				"4-6",
+				"4-7",
+				"4-8",
+				"4-9",
+				"5-6",
+				"5-7",
+				"5-8",
+				"5-9",
+				"5-10"
+			],
+			"weight": 3,
+			"isFixedEvent": false
+		},
+		"rewards": {
+			"hardReward": 0,
+			"softReward": 0,
+			"resourceReward": []
+		}
+	}
+},
+	{
+    "event": {
+		"id": "tankArmy_1",
+		"name": "Tank army",
+		"type": "Capture",
+		"description": "tankArmy_1 war",
+		"image": "assets/event/humanArmy_1.png",
+		"questImage": "assets/glass.png",
+		"icon": "assets/mapIcons/event_icon_tank.svg",
+		"iconBg": "assets/mapIcons/map_icon_bg_hexagon_red.svg",
+		"relatedEvents": [],
+		"craftEvent": [
+			{
+				"id": "sand",
+				"image": "assets/sand.png",
+				"count": 5
+			},
+			{
+				"id": "glass",
+				"image": "assets/glass.png",
+				"count": 100
+			}
+		],
+		"price": 10000,
+		"difficulty": {
+			"baseChance": 0.1,
+			"tryMultiplay": 1.1
+		},
+		"generation": {
+			"tileList": [
+				"3-6",
+				"3-7",
+				"3-8",
+				"3-9",
+				"3-10",
+				"4-6",
+				"4-7",
+				"4-8",
+				"4-9",
+				"5-6",
+				"5-7",
+				"5-8",
+				"5-9",
+				"5-10"
+			],
+			"weight": 1,
+			"isFixedEvent": false
+		},
+		"rewards": {
+			"hardReward": 0,
+			"softReward": 0,
+			"resourceReward": []
+		}
+	}
+},
+	{
+	 "event": {
+		 "id": "copper_factory",
+		 "name": "Iron factory",
+		 "type": "Build",
+		 "description": "Build factory",
+		 "image": "assets/event/humanArmy_1.png",
+		 "questImage": "assets/copper.png",
+		 "icon": "assets/mapIcons/event_icon_recurce.svg",
+		 "iconBg": "assets/mapIcons/map_icon_bg_hexagon_red.svg",
+		 "relatedEvents": [],
+		 "craftEvent": [
+			 {
+				 "id": "sand",
+				 "image": "assets/sand.png",
+				 "count": 5
+			 }
+		 ],
+		 "price": 100000,
+		 "difficulty": {
+			 "baseChance": 1,
+			 "tryMultiplay": 1
+		 },
+		 "generation": {
+			 "tileList": [
+				 "2-9"
+			 ],
+			 "weight": 1,
+			 "isFixedEvent": true
+		 },
+		 "rewards": {
+			 "hardReward": 0,
+			 "softReward": 0,
+			 "resourceReward": [
+				 "copper"
+			 ]
+		 }
+	 }
+	 },
+	{
+	 "event": {
+		 "id": "tungsten_factory",
+		 "name": "Engine factory",
+		 "type": "Build",
+		 "description": "Build factory",
+		 "image": "assets/event/humanArmy_1.png",
+		 "questImage": "assets/tungsten.png",
+		 "icon": "assets/mapIcons/event_icon_recurce.svg",
+		 "iconBg": "assets/mapIcons/map_icon_bg_hexagon_red.svg",
+		 "relatedEvents": [],
+		 "craftEvent": [
+			 {
+				 "id": "sand",
+				 "image": "assets/sand.png",
+				 "count": 5
+			 }
+		 ],
+		 "price": 100000,
+		 "difficulty": {
+			 "baseChance": 1,
+			 "tryMultiplay": 1
+		 },
+		 "generation": {
+			 "tileList": [
+				 "4-8"
+			 ],
+			 "weight": 1,
+			 "isFixedEvent": true
+		 },
+		 "rewards": {
+			 "hardReward": 0,
+			 "softReward": 0,
+			 "resourceReward": [
+				 "tungsten"
+			 ]
+		 }
+	 }
+	 },
+	{
+	 "event": {
+		 "id": "bulb_factory",
+		 "name": "Gun factory",
+		 "type": "Build",
+		 "description": "Build factory",
+		 "image": "assets/event/humanArmy_1.png",
+		 "questImage": "assets/bulb.png",
+		 "icon": "assets/mapIcons/event_icon_recurce.svg",
+		 "iconBg": "assets/mapIcons/map_icon_bg_hexagon_red.svg",
+		 "relatedEvents": [],
+		 "craftEvent": [
+			 {
+				 "id": "sand",
+				 "image": "assets/sand.png",
+				 "count": 5
+			 }
+		 ],
+		 "price": 100000,
+		 "difficulty": {
+			 "baseChance": 1,
+			 "tryMultiplay": 1
+		 },
+		 "generation": {
+			 "tileList": [
+				 "6-8"
+			 ],
+			 "weight": 1,
+			 "isFixedEvent": true
+		 },
+		 "rewards": {
+			 "hardReward": 0,
+			 "softReward": 0,
+			 "resourceReward": [
+				 "bulb"
+			 ]
+		 }
+	 }
+	 },
+	{
+		"event": {
+			"id": "pachinko_machine_factory",
+			"name": "Terminator factory",
+			"type": "Build",
+			"description": "Build factory",
+			"image": "assets/event/humanArmy_1.png",
+			"questImage": "assets/pachinko_machine.png",
+			"icon": "assets/mapIcons/event_icon_recurce.svg",
+			"iconBg": "assets/mapIcons/map_icon_bg_hexagon_red.svg",
+			"relatedEvents": [],
+			"craftEvent": [
+				{
+					"id": "sand",
+					"image": "assets/sand.png",
+					"count": 5
+				}
+			],
+			"price": 100000,
+			"difficulty": {
+				"baseChance": 1,
+				"tryMultiplay": 1
+			},
+			"generation": {
+				"tileList": [
+					"4-5"
+				],
+				"weight": 1,
+				"isFixedEvent": true
+			},
+			"rewards": {
+				"hardReward": 0,
+				"softReward": 0,
+				"resourceReward": [
+					"pachinko_machine"
+				]
+			}
+		}
+	}
+  
+ ]

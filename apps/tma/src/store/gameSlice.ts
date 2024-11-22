@@ -6,7 +6,7 @@ import {
   MineType,
   Mines,
   SliceCreator,
-  UserGameSlice,
+  UserGameSlice, Rewards,
 } from "./types";
 
 export const createGameSlice: SliceCreator<keyof UserGameSlice> = (
@@ -43,6 +43,73 @@ export const createGameSlice: SliceCreator<keyof UserGameSlice> = (
           craftPerMinute: 0,
         },
       };
+    });
+  },
+
+  buyEvent: (price: number) => {
+    set((state) => {
+      state.coin -= price;
+    });
+  },
+
+  takeRewards: (reward: Rewards) => {
+    set((state) => {
+      const resources = get().availableMines; // Access available mines for proper initialization
+
+      state.coin += reward.softReward;
+      state.mCoin += reward.hardReward;
+
+      // Add resources to mines
+      reward.resourceReward.forEach((resourceId) => {
+        const resourceConfig = resources.find((r) => r.resource.id === resourceId);
+
+        if (resourceConfig === undefined) {
+          console.warn(`Resource ${resourceId} not found in availableMines.`);
+          return;
+        }
+
+        if (state.mines[resourceId]) {
+          // If the mine already exists, add 1 to its store
+          state.mines[resourceId]!.store.count += 1;
+        } else {
+          // If the mine doesn't exist, initialize it with the proper structure
+          state.mines[resourceId] = {
+            id: resourceId,
+            store: {
+              count: 1,
+            },
+            maxStore: resourceConfig.store.updateCapacityCount[0], // Use the first level max store
+            levelStore: 0,
+            usagePerMinute: 0,
+            passive: {
+              currentSpeedProductiviy: 1,
+              workerCount: 0,
+              fabricGrade: 0,
+              currentProduceTime: resourceConfig.passive.produceTime, // Use the produce time from config
+              progress: 0,
+              craftPerMinute: 0,
+            },
+          };
+        }
+      });
+    });
+  },
+
+
+  // Check if resources are sufficient for an event
+  canCraftEvent: (craftRequirements: { id: string; count: number }[]) => {
+    const mines = get().mines;
+    return craftRequirements.every((req) => (mines[req.id]?.store.count ?? 0) >= req.count);
+  },
+
+  // Deduct resources when crafting an event
+  useResources: (craftRequirements: { id: string; count: number }[]) => {
+    set((state) => {
+      craftRequirements.forEach(({ id, count }) => {
+        if (state.mines[id]) {
+          state.mines[id]!.store.count -= count;
+        }
+      });
     });
   },
 
@@ -254,9 +321,84 @@ export const createGameSlice: SliceCreator<keyof UserGameSlice> = (
     });
   },
 
+  /*init: (coin, mCoin, mines) => {
+    set(() => {
+      const resources = get().availableMines;
+
+      const sandResource = resources.find((r) => r.resource.id === "sand");
+      const glassResource = resources.find((r) => r.resource.id === "glass");
+      const sandglassResource = resources.find(r => r.resource.id === "sandglass");
+
+      return {
+        coin: coin + 200000, // Установить начальные монеты
+        mCoin: mCoin,  // Если нужно, установить начальные "чудо-монеты"
+        mines: {
+          sand: sandResource
+              ? {
+                id: "sand",
+                store: {
+                  count: 500, // Начальное количество песка
+                },
+                maxStore: sandResource.store.updateCapacityCount[0],
+                levelStore: 0,
+                usagePerMinute: 0,
+                passive: {
+                  currentSpeedProductiviy: 1,
+                  workerCount: 0,
+                  fabricGrade: 0,
+                  currentProduceTime: sandResource.passive.produceTime,
+                  progress: 0,
+                  craftPerMinute: 0,
+                },
+              }
+              : undefined, // Если ресурс не найден, оставить пустым
+          glass: glassResource
+              ? {
+                id: "glass",
+                store: {
+                  count: 2000, // Начальное количество стекла
+                },
+                maxStore: glassResource.store.updateCapacityCount[0],
+                levelStore: 0,
+                usagePerMinute: 0,
+                passive: {
+                  currentSpeedProductiviy: 1,
+                  workerCount: 0,
+                  fabricGrade: 0,
+                  currentProduceTime: glassResource.passive.produceTime,
+                  progress: 0,
+                  craftPerMinute: 0,
+                },
+              }
+              : undefined,
+          sandglass: sandglassResource
+              ? {
+                id: "sandglass",
+                store: {
+                  count: 0, // Начальное количество дискет
+                },
+                maxStore: sandglassResource.store.updateCapacityCount[0],
+                levelStore: 0,
+                usagePerMinute: 0,
+                passive: {
+                  currentSpeedProductiviy: 1,
+                  workerCount: 0,
+                  fabricGrade: 0,
+                  currentProduceTime: sandglassResource.passive.produceTime,
+                  progress: 0,
+                  craftPerMinute: 0,
+                },
+              }
+              : undefined,
+          ...mines, // Добавить другие ресурсы, если они были переданы
+        },
+      };
+    });
+  },*/
   init: (coin, mCoin, mines) => {
     set({ coin, mCoin, mines });
   },
+
 });
 
 export const isImpossibleMine = (

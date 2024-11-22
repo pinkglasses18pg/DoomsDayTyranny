@@ -6,6 +6,7 @@ import {User} from "./types";
 export type ResultInit = {
   status: "created" | "updated" | "error";
   gameStats: string;
+  mapData: string;
   config: string | null;
   ticks?: number;
 };
@@ -35,6 +36,7 @@ export async function initUser(
     return {
       status: "error",
       gameStats: "",
+      mapData: "",
       config: null,
     };
   }
@@ -47,14 +49,34 @@ export async function initUser(
     return {
       status: "updated",
       gameStats: userData.gameStats,
+      mapData: userData.mapData,
       config,
       ticks: Math.ceil((Date.now() - userData.lastUpdate) / 100),
     };
   } else {
     const newUser: User = {
       telegramId: telegramID,
-      coins: 0,
-      gameStats: "",
+      coins: 200000,
+      gameStats: "{\"coin\":200000,\"mines\":" +
+          "{\"sand\":{\"id\":\"sand\",\"store\":" +
+          "{\"count\":500},\"maxStore\":1000," +
+          "\"levelStore\":0,\"usagePerMinute\":0," +
+          "\"passive\":" +
+          "{\"currentSpeedProductiviy\":1,\"workerCount\":0," +
+          "\"fabricGrade\":0,\"currentProduceTime\":4," +
+          "\"progress\":0,\"craftPerMinute\":0}}," +
+          "\"glass\":{\"id\":\"glass\",\"store\":{\"count\":2000}," +
+          "\"maxStore\":2250,\"levelStore\":0,\"usagePerMinute\":0," +
+          "\"passive\":{\"currentSpeedProductiviy\":1," +
+          "\"workerCount\":0,\"fabricGrade\":0,\"currentProduceTime\":16," +
+          "\"progress\":0,\"craftPerMinute\":0}}," +
+          "\"sandglass\":{\"id\":\"sandglass\",\"store\":{\"count\":0}," +
+          "\"maxStore\":600,\"levelStore\":0," +
+          "\"usagePerMinute\":0,\"passive\":{\"currentSpeedProductiviy\":1," +
+          "\"workerCount\":0,\"fabricGrade\":0," +
+          "\"currentProduceTime\":16,\"progress\":0,\"craftPerMinute\":0}}}," +
+          "\"mCoin\":0}",
+      mapData: "",
       lastUpdate: Date.now(),
       username: username,
     };
@@ -64,6 +86,7 @@ export async function initUser(
     return {
       status: "created",
       gameStats: "",
+      mapData: "",
       config,
     };
   }

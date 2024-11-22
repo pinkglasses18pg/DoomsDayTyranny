@@ -1,20 +1,25 @@
 // src/components/Map.tsx
-import React, { useState } from 'react';
+import React, { useState} from 'react';
 import { TileType} from '@/store/types';
-//import { mapData } from './mapData';
 import { TransformWrapper, TransformComponent} from 'react-zoom-pan-pinch';
 import EventScreen from './EventScreen'; // В будущем реализуем
 import Tile from './Tile';
-import { EventType } from '@/store/types';
 
-import rawEventConfig from '@/event_config.json'; // TO DO REFACTOR
-import { generateMapData } from "@/pages/Map/MapDataGeneration";
-
-const mapData = generateMapData();
+import { useCommonStore } from "@/components/StoreContext.tsx";
 
 const Map: React.FC = () => {
     const [selectedTile, setSelectedTile] = useState<TileType | null>(null);
-    const events: EventType[] = (rawEventConfig as { event: EventType }[]).map((item) => item.event);
+
+    const mapData = useCommonStore((state ) => state.mapData);
+
+    const getTileById = useCommonStore((state ) => state.getTileById);
+    const events = useCommonStore((state ) => state.events);
+
+    const canCraftEvent = useCommonStore((state) => state.canCraftEvent);
+    const useResources = useCommonStore((state) => state.useResources);
+    const mines = useCommonStore((state) => state.mines);
+    const coins = useCommonStore((state) => state.coin);
+    const buyEvent = useCommonStore((state) => state.buyEvent);
 
 
 
@@ -25,10 +30,23 @@ const Map: React.FC = () => {
         // В будущем: открыть экран ивента
     };
 
+    // Функция для вычисления ширины карты на основе координат тайлов
+    const calculateMapWidth = (): number => {
+        const maxX = Math.max(...mapData.map((tile) => tile.x));
+        return maxX * 80; // 78px тайл + 2px отступы
+    };
+
+    const calculateMapHeight = (): number => {
+        const maxY = Math.max(...mapData.map((tile) => tile.y));
+        return (maxY + 1.5) * 80; // 78px тайл + 2px отступ
+    };
+
     const getEventForTile = (tileId: string) => {
-        return events.find((event) =>
-            event.generation.tileList.includes(tileId)
-        );
+        const tile = getTileById(tileId);
+        if (tile?.eventId) {
+            return events.find((event) => event.id === tile.eventId);
+        }
+        return undefined;
     };
 
 
@@ -36,7 +54,7 @@ const Map: React.FC = () => {
         <div className="map-page">
             <TransformWrapper
                 minScale={1}
-                maxScale={3}
+                maxScale={1}
                 initialPositionX={700}
                 initialPositionY={500}
                 centerOnInit={true}
@@ -89,21 +107,26 @@ const Map: React.FC = () => {
                     </div>
                 </TransformComponent>
             </TransformWrapper>
-            {selectedTile && <EventScreen tile={selectedTile} onClose={() => setSelectedTile(null)} />}
+            {selectedTile && (
+                <EventScreen
+                    tile={selectedTile}
+                    event={getEventForTile(selectedTile.id)} // Pass the event details
+                    canCraftEvent={canCraftEvent}
+                    onCraft={(event) => {useResources(event.craftEvent); buyEvent(event.price)}}
+                    onClose={() => setSelectedTile(null)}
+                    mines={mines}
+                    coins={coins}
+                />
+            )}
         </div>
     );
 };
 
-// Функция для вычисления ширины карты на основе координат тайлов
-const calculateMapWidth = (): number => {
-    const maxX = Math.max(...mapData.map((tile) => tile.x));
-    return maxX * 80; // 78px тайл + 2px отступы
-};
 
-const calculateMapHeight = (): number => {
-    const maxY = Math.max(...mapData.map((tile) => tile.y));
-    return (maxY + 1.5) * 80; // 78px тайл + 2px отступ
-};
+
+
+
+export default Map;
 
 // Функция для вычисления начального положения, чтобы отображать центральный тайл
 /*const calculateInitialPosition = () => {
@@ -119,6 +142,3 @@ const calculateMapHeight = (): number => {
 
     return { initialX, initialY };
 };*/
-
-export default Map;
-

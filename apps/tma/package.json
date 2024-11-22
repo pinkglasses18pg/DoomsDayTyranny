@@ -16,8 +16,10 @@
     "@tma.js/react-router-integration": "^6.0.0",
     "@tma.js/sdk": "^2.7.0",
     "@tma.js/sdk-react": "^2.2.8",
+    "@tonconnect/ui": "^2.0.9",
     "@tonconnect/ui-react": "^2.0.9",
     "@types/telegram-web-app": "^7.10.1",
+    "axios": "^1.7.7",
     "clsx": "^2.1.1",
     "eruda": "^3.4.1",
     "firebase": "^11.0.1",
@@ -28,6 +30,7 @@
     "react-dom": "^18.3.1",
     "react-i18next": "^15.1.1",
     "react-router-dom": "^6.28.0",
+    "react-zoom-pan-pinch": "^3.6.1",
     "share-buttons": "^1.9.0",
     "telegram-webapps-types": "^1.0.5",
     "zustand": "^5.0.1"

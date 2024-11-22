@@ -10,9 +10,11 @@ import background from "@/assets/background.svg";
 import { Tutor } from "./Tutor";
 import { UpdateStore } from "./UpdateStore";
 import "./noise.css";
+import { useCommonStore } from "./StoreContext";
 
 export const Layout = () => {
   const miniApp = useMiniApp();
+  const initState = useCommonStore((state) => state.initState);
 
   useEffect(() => {
     miniApp.setHeaderColor("#121212");
@@ -21,6 +23,10 @@ export const Layout = () => {
 
   return (
     <div className="h-screen w-screen flex flex-col bg-darkM overflow-hidden relative">
+        {initState === "loading" ? (
+            <LoadIndicator />
+        ) : (
+            <>
       <UpdateStore />
       <Header />
       <div
@@ -44,6 +50,9 @@ export const Layout = () => {
       <div className="noise" />
       <div className="scanline"></div>
       <Tutor />
+
+            </>
+            )}
     </div>
   );
 };

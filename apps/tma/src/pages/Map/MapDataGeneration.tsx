@@ -48,6 +48,7 @@ export const generateMapData = (): TileType[] => {
                 owner: x === centerX && y === centerY ? "player" : "human", // Central tile belongs to the player
                 hasEvent: !!event, // true if an event exists for this tile
                 eventId: event?.id, // ID of the associated event, if any
+                attempts: 0,
             });
         }
     }

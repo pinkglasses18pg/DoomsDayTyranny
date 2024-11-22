@@ -430,8 +430,26 @@ async function createForTestParentReferral() {
 
     const userdata = {
       "telegramId": "303182449",
-      "coins": 0,
-      "gameStats" : "",
+      "coins": 200000,
+      "gameStats" : "{\"coin\":200000,\"mines\":" +
+          "{\"sand\":{\"id\":\"sand\",\"store\":" +
+          "{\"count\":500},\"maxStore\":1000," +
+          "\"levelStore\":0,\"usagePerMinute\":0," +
+          "\"passive\":" +
+          "{\"currentSpeedProductiviy\":1,\"workerCount\":0," +
+          "\"fabricGrade\":0,\"currentProduceTime\":4," +
+          "\"progress\":0,\"craftPerMinute\":0}}," +
+          "\"glass\":{\"id\":\"glass\",\"store\":{\"count\":2000}," +
+          "\"maxStore\":2250,\"levelStore\":0,\"usagePerMinute\":0," +
+          "\"passive\":{\"currentSpeedProductiviy\":1," +
+          "\"workerCount\":0,\"fabricGrade\":0,\"currentProduceTime\":16," +
+          "\"progress\":0,\"craftPerMinute\":0}}," +
+          "\"sandglass\":{\"id\":\"sandglass\",\"store\":{\"count\":0}," +
+          "\"maxStore\":600,\"levelStore\":0," +
+          "\"usagePerMinute\":0,\"passive\":{\"currentSpeedProductiviy\":1," +
+          "\"workerCount\":0,\"fabricGrade\":0," +
+          "\"currentProduceTime\":16,\"progress\":0,\"craftPerMinute\":0}}}," +
+          "\"mCoin\":0}",
       "username" : "Bogdan_Galay",
       "referralChildren": [{"id": "66298544", "isRead": false}, {"id": "12345678", "isRead": true}],
     }
@@ -456,6 +474,6 @@ await writeConfigData();
 
 //await readAllUsersData();
 
-//await createUserData();
+await createUserData();
 
 //await createForTestParentReferral();

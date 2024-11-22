@@ -4,6 +4,7 @@ export interface User {
   telegramId: string;
   coins: number;
   gameStats: string;
+  mapData: string;
   lastUpdate: number;
   username?: string; // New field
   referredParent?: string; // New field (optional)

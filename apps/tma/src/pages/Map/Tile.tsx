@@ -16,6 +16,9 @@ const Tile: React.FC<TileProps> = ({ tile, onClick, event }) => {
         }
     };
 
+    //const isCraftable = event?.craftEvent ? canCraftEvent(event.craftEvent) : false;
+
+
     return (
         <div
             className="tile"
@@ -58,6 +61,7 @@ const Tile: React.FC<TileProps> = ({ tile, onClick, event }) => {
                         alt={event.name}
                         style={{ width: '100%', height: '100%' }} // Иконка внутри iconBg
                     />
+                    {/*!isCraftable && <span style={{ color: 'red' }}>Not Available</span>*/}
                 </div>
                 )}
 

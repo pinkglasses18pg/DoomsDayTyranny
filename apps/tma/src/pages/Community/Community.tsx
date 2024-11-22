@@ -129,7 +129,7 @@ const Production = () => {
     });
   }, [cloudStorage]);
 
-  const referralLink = `https://t.me/miracleGameBot?startapp=${userId}`;
+  const referralLink = `https://t.me/DoomsDayTyrannybot?startapp=${userId}`;
 
   return (
     <div className="flex flex-col gap-4 p-5">
@@ -140,7 +140,7 @@ const Production = () => {
           <div className="flex items-start">
             <img src={telegram_icon} className="w-10 h-10" alt="icon" />
             <div className="ml-3">
-              <Link to="https://t.me/MiracleGame_Channel" className="text-white text-lg">
+              <Link to="https://t.me/DoomsdayTyranny" className="text-white text-lg">
                 Main Channel
               </Link>
               <p className="text-gray-400 text-sm">{t("In this channel you can find out news about changes in prices for setting items")}</p>
@@ -149,7 +149,7 @@ const Production = () => {
           <div className="flex items-start">
             <img src={alpha_icon} className="w-10 h-10" alt="icon" />
             <div className="ml-3">
-              <Link to="https://t.me/MiracleGame_Chat" className="text-white text-lg">
+              <Link to="https://t.me/+RC89TpkfIYVhNDUy" className="text-white text-lg">
                 Alpha Channel
               </Link>
               <p className="text-gray-400 text-sm">{t("Insider channel that only the first 1000 players can join")}</p>

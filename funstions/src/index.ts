@@ -7,45 +7,37 @@ import {save as saveStats} from "./save";
 import {onRequest} from "firebase-functions/v2/https";
 import {FieldPath} from "firebase-admin/firestore";
 
-/* const allowedOrigins = [
-  "https://telegram-miracle-f1779.web.app", // Продакшен
-  "http://localhost:3005", // Локальный фронтенд
-  "http://127.0.0.1:3005",
-  "http://127.0.0.1:5001",
-    "miracle.ap.ngrok.io",
-];*/
-
 
 export const getUserById = onRequest({cors: true}, async (
-    request,
-    response
+  request,
+  response
 ) => {
   console.log("from getUserById : ", request.body);
   const userId = request.body.data.id as string;
 
   if (!userId) {
     response.status(400).send({data: {
-        success: false,
-        message: "Bad Request: No user ID provided"},
+      success: false,
+      message: "Bad Request: No user ID provided"},
     });
     return;
   }
 
   try {
     const userDoc = await db.collection(
-        "users").doc(userId).get();
+      "users").doc(userId).get();
 
     if (!userDoc.exists) {
       response.status(404).send({data: {success: false,
-          message: "User not found"}});
+        message: "User not found"}});
       return;
     }
 
     response.status(200).send({data: {success: true, user: userDoc.data()}});
   } catch (error: any) {
     response.status(500).send({data: {success: false,
-        message: "Internal Server Error",
-        error: error.message},
+      message: "Internal Server Error",
+      error: error.message},
     });
   }
 });
@@ -56,8 +48,8 @@ export type InitUserRequest = {
 const adminUser = ["99281932"];
 export type InitUserResponse = ResultInit;
 export const initUser = onRequest({cors: true}, async (
-    request,
-    response
+  request,
+  response
 ) => {
   const data = request.body.data;
   console.log("data is : ", data);
@@ -68,8 +60,8 @@ export const initUser = onRequest({cors: true}, async (
 
   if (userId === null) {
     response
-        .status(403)
-        .send({data: {success: false, message: "Unauthorized"}});
+      .status(403)
+      .send({data: {success: false, message: "Unauthorized"}});
     return;
   }
   const result = await initUserApi(userId, username || undefined);
@@ -78,29 +70,31 @@ export const initUser = onRequest({cors: true}, async (
 });
 
 export const save = onRequest({cors: true}, async (
-    request,
-    response
+  request,
+  response
 ) => {
   const data = request.body.data;
   const userId = auth(data.auth);
   const gameStats = data.gameStats;
+  const mapData = data.mapData;
 
 
   if (userId === null) {
     response
-        .status(403)
-        .send({data: {success: false, message: "Unauthorized"}});
+      .status(403)
+      .send({data: {success: false, message: "Unauthorized"}});
     return;
   }
-  if (!gameStats) {
+  if (!gameStats || !mapData) {
     response
-        .status(400)
-        .send({data: {success: false, message: "Bad Request"}});
+      .status(400)
+      .send({data: {success: false, message: "Bad Request"}});
   }
 
   const payload: any = {
     userId,
     gameStats,
+    mapData,
   };
   if (data.referredParent) {
     payload.referredParent = data.referredParent;
@@ -112,42 +106,42 @@ export const save = onRequest({cors: true}, async (
 });
 
 export const uploadConfig = onRequest({cors: true},
-    async (request, response) => {
-      const data = request.body.data;
-      const userId = auth(data.auth);
-      const config = data.config;
+  async (request, response) => {
+    const data = request.body.data;
+    const userId = auth(data.auth);
+    const config = data.config;
 
-      if (userId === null || !adminUser.includes(userId)) {
-        response
-            .status(403)
-            .send({data: {success: false, message: "Unauthorized"}});
-        return;
-      }
-      if (!config) {
-        response.status(400).send({
-          data: {success: false, message: "Bad Request: No config provided"},
-        });
-        return;
-      }
+    if (userId === null || !adminUser.includes(userId)) {
+      response
+        .status(403)
+        .send({data: {success: false, message: "Unauthorized"}});
+      return;
+    }
+    if (!config) {
+      response.status(400).send({
+        data: {success: false, message: "Bad Request: No config provided"},
+      });
+      return;
+    }
 
-      try {
-        const configRef = db.collection(
-            "config").doc("electronic");
-        await configRef.set({config: JSON.parse(config), upload: new Date()});
+    try {
+      const configRef = db.collection(
+        "config").doc("electronic");
+      await configRef.set({config: JSON.parse(config), upload: new Date()});
 
-        response.status(200).send({
-          data: {success: true, message: "Config uploaded successfully"},
-        });
-      } catch (error) {
-        response.status(500).send({
-          data: {
-            success: false,
-            message: "Internal Server Error",
-            error: error,
-          },
-        });
-      }
-    });
+      response.status(200).send({
+        data: {success: true, message: "Config uploaded successfully"},
+      });
+    } catch (error) {
+      response.status(500).send({
+        data: {
+          success: false,
+          message: "Internal Server Error",
+          error: error,
+        },
+      });
+    }
+  });
 
 interface ReferralWithUsername {
   id: string;
@@ -157,8 +151,8 @@ interface ReferralWithUsername {
 }
 
 export const getNewReferrals = onRequest({cors: true}, async (
-    request,
-    response
+  request,
+  response
 ) => {
   const data = request.body.data;
   const userId = auth(data.auth);
@@ -169,18 +163,18 @@ export const getNewReferrals = onRequest({cors: true}, async (
 
   if (userId === null) {
     response.status(403).send({data: {success: false,
-        message: "Unauthorized"}});
+      message: "Unauthorized"}});
     return;
   }
 
   try {
     const userRef = db.collection(
-        "users").doc(userId);
+      "users").doc(userId);
     const userDoc = await userRef.get();
 
     if (!userDoc.exists) {
       response.status(404).send({data: {success: false,
-          message: "User not found"}});
+        message: "User not found"}});
       return;
     }
 
@@ -189,7 +183,7 @@ export const getNewReferrals = onRequest({cors: true}, async (
 
     // Фильтруем рефералов с isRead = false
     const newReferrals = referralChildren.filter(
-        (child: { id: string; isRead: boolean }) => !child.isRead
+      (child: { id: string; isRead: boolean }) => !child.isRead
     );
 
     if (newReferrals.length === 0) {
@@ -215,7 +209,7 @@ export const getNewReferrals = onRequest({cors: true}, async (
 
     for (const batch of batches) {
       const usersSnapshot = await db.collection(
-          "users").where(FieldPath.documentId(), "in", batch).get();
+        "users").where(FieldPath.documentId(), "in", batch).get();
       const userMap: { [key: string]: string } = {};
 
       usersSnapshot.forEach((doc) => {
@@ -235,27 +229,27 @@ export const getNewReferrals = onRequest({cors: true}, async (
     console.log("newReferrals from index.ts : ", referralWithUsernames);
 
     response.status(200).send({data: {success: true,
-        newReferrals: referralWithUsernames},
+      newReferrals: referralWithUsernames},
     });
   } catch (error: any) {
     console.error("Error fetching new referrals:", error);
     response.status(500).send({data: {success: false,
-        message: "Internal Server Error",
-        error: error.message,
-      }});
+      message: "Internal Server Error",
+      error: error.message,
+    }});
   }
 });
 
 export const markReferralsAsRead = onRequest({cors: true}, async (
-    request,
-    response
+  request,
+  response
 ) => {
   const data = request.body.data;
   const userId = auth(data.auth);
 
   if (userId === null) {
     response.status(403).send({data: {success: false,
-        message: "Unauthorized"}});
+      message: "Unauthorized"}});
     return;
   }
 
@@ -265,7 +259,7 @@ export const markReferralsAsRead = onRequest({cors: true}, async (
 
     if (!userDoc.exists) {
       response.status(404).send({data: {success: false,
-          message: "User not found"}});
+        message: "User not found"}});
       return;
     }
 
@@ -286,11 +280,11 @@ export const markReferralsAsRead = onRequest({cors: true}, async (
     await userRef.update({referralChildren});
 
     response.status(200).send({data: {success: true,
-        message: "Referrals marked as read"}});
+      message: "Referrals marked as read"}});
   } catch (error: any) {
     console.error("Error updating referrals:", error);
     response.status(500).send({data: {success: false,
-        message: "Internal Server Error",
-        error: error.message}});
+      message: "Internal Server Error",
+      error: error.message}});
   }
 });

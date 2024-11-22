@@ -5,7 +5,7 @@ import {
   MapPage,
   CommunityPage,
   ProductionItem,
-  Crypto,
+  Crypto, EventPage,
 } from "./LazyComponents";
 import mining from "@/assets/icons/icon_mining.svg";
 import world from "@/assets/icons/world_icon.svg";
@@ -28,7 +28,7 @@ export const routes: Route[] = [
     icon: mining,
   },
   {
-    path: "/market",
+    path: "/quests",
     Component: MarketPage,
     title: "building",
     nav: true,
@@ -47,6 +47,13 @@ export const routes: Route[] = [
     Component: ProductionItem,
     nav: false,
   },
+
+  {
+    path: "/event/:eventId",
+    Component: EventPage, // Add the EventPage component here
+    nav: false,
+  },
+
   {
     path: "/crypto",
     Component: Crypto,

@@ -7,9 +7,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="https://unpkg.com/@tonconnect/ui@latest/dist/tonconnect-ui.min.js"></script>
   </head>
   <body>
-    <div id="root"></div>
+  <div id="loading-indicator" class="bg-darkM" style="position: fixed; inset: 0; display: flex; justify-content: center; align-items: center;">
+    <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+      <h1 className="text-5xl font-bold text-white mb-10">Is this even working?</h1>
+      <img src="./assets/icons/loadder.svg" alt="Loading..." style="width: 100px; height: 100px;" />
+    </div>
+  </div>
+  <div id="root" class="bg-darkM" style="display: none;"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

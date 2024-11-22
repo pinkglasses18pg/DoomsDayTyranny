@@ -15,8 +15,7 @@ const InvitePage: React.FC = () => {
   const mCoin = useCommonStore((state) => state.mCoin);
   const setAppState = useCommonStore((state) => state.setAppState);
   const init = useCommonStore((state) => state.init);
-
-  //const [referralCode, setReferralCode] = useState<string | null>(null);
+  const mapData = useCommonStore((state) => state.mapData);
 
   // Инициализация навигатора
   const navigate = useNavigate();
@@ -33,16 +32,22 @@ const InvitePage: React.FC = () => {
 
   const [fetchUserById] = useHttpsCallable(getFunctions(app), 'getUserById');
 
+    const [isClaimed, setIsClaimed] = useState<boolean>(false);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
   const fetchUser = useCallback(async () => {
     if (!isReaded && referralCode) {
+        setIsLoading(true);
       try {
         setIsReaded(true);
         console.log("from InvitePage: referralCode: ", referralCode || null);
         const result = await fetchUserById({id: referralCode});
         setUserData(result?.data || null);
-        console.log("from InvitePage: ", result?.data || null);
+        console.log("Fetched user data: ", result?.data || null);
       } catch (err) {
         console.error("Error fetching user:", err);
+      } finally {
+          setIsLoading(false);
       }
     }
   }, [isReaded, referralCode, fetchUserById]);
@@ -63,34 +68,56 @@ const InvitePage: React.FC = () => {
   }, [fetchUser]);
 
   const handleTakeReward = useCallback(() => {
+      console.log("new handle log!!!!!");
 
-    if (!referralCode || !userData || !isReaded) {
+      // Prevent multiple clicks
+      if (isClaimed) {
+          console.warn("Reward already claimed!");
+          return;
+      }
+
+    if (!referralCode || !userData ) {
       console.error("Required data is missing");
       return;
     }
 
+    if(!isReaded) {
+        console.log("the data isn't read yet!");
+        return;
+    }
+
+      setIsClaimed(true);
+
 
       setLatestGameStats({ coin: coin + 666, mCoin, mines });
-      init(666, mCoin, mines);
+      init(coin + 666, mCoin, mines);
 
       // Обновление данных в базе с использованием облачной функции "save"
     executeCallable({
         gameStats: JSON.stringify(latestGameStats),
+        mapData: JSON.stringify(mapData),
         referredParent: referralCode,
       })
       .then((result) => {
           if (result && result.data) {
         console.log("Data saved successfully:", result.data);
         setAppState({ initState : "langSetted"});
-        navigate("/"); // Перенаправление на главную страницу после успешного сохранения
+        //navigate("/"); // Перенаправление на главную страницу после успешного сохранения
         } else {
       console.error("No data returned from callable function.");
+            setAppState({ initState : "langSetted"});
+              setTimeout(() => {
+                  navigate("/");
+              }, 500);
     }
       })
       .catch((error) => {
         console.error("Error saving data:", error);
       });
-  navigate("/"); // Simplified navigation
+    setAppState({ initState : "langSetted"});
+      setTimeout(() => {
+          navigate("/");
+      }, 500); // Simplified navigation
   }, [referralCode, userData, isReaded, coin, mCoin, mines, init, executeCallable, navigate, setAppState]);
 
 
@@ -114,62 +141,17 @@ const InvitePage: React.FC = () => {
       )}
       <p className="text-lg mb-1">Your reward</p>
       <p className="text-5xl font-bold text-white mb-10">666 ¥</p>
-      <button className="bg-yellow-500 text-black rounded-lg px-8 py-3 text-lg hover:opacity-90"
-              onClick={handleTakeReward}>Take</button>
+        <button
+            className={`bg-yellow-500 text-black rounded-lg px-8 py-3 text-lg ${
+                isClaimed ? "opacity-50 cursor-not-allowed" : "hover:opacity-90"
+            }`}
+            onClick={handleTakeReward}
+            disabled={isClaimed} // Disable button after claim
+        >
+            {isClaimed ? "Reward Claimed" : isLoading ? "Loading..." : "Take"}
+        </button>
     </div>
   );
 };
-
-/*const styles = {
-  container: {
-    backgroundColor: "#1A1A1A", // Тёмный фон
-    color: "white",
-    textAlign: "center" as const, // Тип кастинга для TypeScript
-    fontFamily: "'Roboto', sans-serif",
-    padding: "20px",
-    minHeight: "100vh",
-    display: "flex",
-    flexDirection: "column" as const,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  logoWrapper: {
-    marginBottom: "20px",
-  },
-  logo: {
-    width: "80px",
-    height: "80px",
-  },
-  congratulations: {
-    fontSize: "24px",
-    marginBottom: "10px",
-  },
-  message: {
-    fontSize: "16px",
-    marginBottom: "20px",
-  },
-  playerName: {
-    color: "#FFD700", // Жёлтый цвет для имени игрока
-  },
-  rewardLabel: {
-    fontSize: "18px",
-    marginBottom: "5px",
-  },
-  rewardAmount: {
-    fontSize: "48px",
-    fontWeight: "bold" as const,
-    color: "#FFFFFF",
-    marginBottom: "40px",
-  },
-  takeButton: {
-    backgroundColor: "#FFD700", // Жёлтая кнопка
-    color: "#000000",
-    border: "none",
-    borderRadius: "10px",
-    padding: "10px 30px",
-    fontSize: "20px",
-    cursor: "pointer",
-  },
-};*/
 
 export default InvitePage;

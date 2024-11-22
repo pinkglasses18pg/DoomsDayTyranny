@@ -1,3 +1,5 @@
+// apps/tma/tailwind.config.js
+
 /** @type {import('tailwindcss').Config} */
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
@@ -14,7 +16,7 @@ export default {
         darkGrayM: "#767676",
         secondDark: "#252525",
         darkM: "#121212",
-        primaryM: "#e8c421",
+        primaryM: "#f7271f", //"#e8c421",
         secondaryM: "#87e88b",
         thirdlyM: "#e8cb9a",
         borderM: "#5E5E5E",
@@ -38,7 +40,6 @@ export default {
       transform: {
         "mirror-y": "scaleX(-1)",
       },
-      boxShadow: {},
       dropShadow: {
         m: "5px 4px 2px rgba(0, 0, 0, 0.18)",
         ml: "0 0 18.5px rgba(254, 255, 254, 0.43)",

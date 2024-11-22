@@ -1,15 +1,15 @@
-import electronicIcon from "@/assets/icons/electronic.svg";
-import pharma from "@/assets/icons/pharmaceuticals.svg";
-import building from "@/assets/icons/building.svg";
-import weapon from "@/assets/icons/weapon.svg";
-import auto from "@/assets/icons/auto.svg";
-import space from "@/assets/icons/space.svg";
+import electronicIcon from "@/assets/icons/electronic_icon.svg";
+import pharma from "@/assets/icons/northamerica_icon.svg";
+import building from "@/assets/icons/eurasia.svg";
+import weapon from "@/assets/icons/africa.svg";
+import auto from "@/assets/icons/southamerica.svg";
+import space from "@/assets/icons/antarctica_icon.svg";
 
 export const industries = [
-  { icon: electronicIcon, name: "electronics" },
-  { icon: pharma, name: "pharmaceuticals" },
-  { icon: building, name: "building" },
-  { icon: weapon, name: "weapon" },
-  { icon: auto, name: "auto" },
-  { icon: space, name: "space" },
+  { icon: electronicIcon, name: "Greenland" },
+  { icon: pharma, name: "North America" },
+  { icon: building, name: "Eurasia" },
+  { icon: weapon, name: "Africa" },
+  { icon: auto, name: "South America" },
+  { icon: space, name: "Antarctica" },
 ];

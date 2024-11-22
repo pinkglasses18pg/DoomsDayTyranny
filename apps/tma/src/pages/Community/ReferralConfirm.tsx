@@ -35,6 +35,7 @@ const ReferralConfirmPage: React.FC = () => {
     console.log("From ReferralConfirm.tsx :: markReferralsAsRead results: ", results);
     // Обновление данных в базе с использованием облачной функции "save"
     setAppState({ initState: "done", newReferrals: [] });
+    setTimeout(() => setAppState({ newReferrals: [] }), 3000);
     navigate("/");
   };
 

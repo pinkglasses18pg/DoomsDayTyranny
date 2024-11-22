@@ -94,6 +94,11 @@ export type MineType = {
   };
 };
 
+export type CraftRequirement = {
+  id: string; // The resource ID
+  count: number; // The required count for the resource
+};
+
 export type Mines = Partial<Record<string, MineType>>;
 
 export interface UserGameSlice {
@@ -105,6 +110,10 @@ export interface UserGameSlice {
   sellStore: (mineId: MineType["id"]) => void;
   updateStore: (mineId: MineType["id"]) => void;
   updateSpeedProductivity: (mineId: MineType["id"]) => void;
+  canCraftEvent: ( CraftRequirements: CraftRequirement[]) => boolean;
+  useResources: ( CraftRequirements: CraftRequirement[]) => void;
+  buyEvent: (price: number) => void;
+  takeRewards: (reward: Rewards) => void;
   hireWorker: (mineId: MineType["id"]) => void;
   tick: () => void;
   init: (coin: number, mCoin: number, mines: Mines) => void;
@@ -129,6 +138,7 @@ export type TileType = {
   owner: string;
   hasEvent: boolean;
   eventId?: string;
+  attempts: number;
 }
 
 export type MapType = {
@@ -137,3 +147,61 @@ export type MapType = {
   tileSetId: string;
   startPoint: number;
 }
+
+// For events types:
+export type CraftResource = {
+  id: string;
+  image: string;
+  count: number;
+};
+
+export type Difficulty = {
+  baseChance: number;
+  tryMultiplay: number;
+};
+
+export type Generation = {
+  tileList: string[]; // Array of tile IDs
+  weight: number;
+  isFixedEvent: boolean;
+};
+
+export type Rewards = {
+  hardReward: number;
+  softReward: number;
+  resourceReward: string[]; // IDs of rewarded resources
+};
+
+export type EventType = {
+  id: string;
+  name: string;
+  type: string; // e.g., "Capture", "Build"
+  description: string;
+  image: string;
+  questImage: string;
+  icon: string;
+  iconBg: string;
+  relatedEvents: string[]; // IDs of related events
+  craftEvent: CraftResource[]; // Resources required to complete the event
+  price: number; // Cost of the event
+  difficulty: Difficulty;
+  generation: Generation;
+  rewards: Rewards;
+};
+
+export type EventSlice = {
+  events: EventType[];
+  getEventById: (eventId: string) => EventType | undefined;
+};
+
+export type MapSlice = {
+  mapData: TileType[];
+  setMapData: (mapData: TileType[]) => void;
+  initializeMap: (width: number, height: number, centerX: number, centerY: number) => void;
+  generateEventsForMap: (capturedTile: TileType) => void;
+  updateTileOwner: (tileId: string, newOwner: string) => void;
+  getTileById: (tileId: string) => TileType | undefined;
+  incrementTileAttempts: (tileId: string) => void;
+  completeEvent: (tileId: string) => void;
+  isTileNeighborOfPlayer: (tileId: string) => boolean;
+};

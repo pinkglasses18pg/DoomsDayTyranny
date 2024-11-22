@@ -1,16 +1,18 @@
 // apps/tma/src/store/store.tsx
 
 import { create } from "zustand";
-import { ConfigSlice, MineType, UserGameSlice, AppSlice } from "./types";
+import { ConfigSlice, MineType, UserGameSlice, AppSlice, EventSlice, MapSlice } from "./types";
 import { createGameSlice, getHireWorkerCount } from "./gameSlice";
 import { createConfigSlice } from "./configSlice";
 import { immer } from "zustand/middleware/immer";
 import { createAppSlice } from "./appSlice";
+import { createEventSlice } from "./eventSlice";
+import { createMapSlice } from "./mapSlice";
 import { CloudStorage } from "@tma.js/sdk";
 import { persist } from "zustand/middleware";
 import { useCommonStore } from "@/components/StoreContext";
 
-export interface Store extends ConfigSlice, UserGameSlice, AppSlice {}
+export interface Store extends ConfigSlice, UserGameSlice, AppSlice, EventSlice, MapSlice {}
 
 const localStorageKeys = ["onMusic", "onSound"];
 
@@ -22,6 +24,8 @@ export const createStore = (_: CloudStorage) => {
         ...createConfigSlice(set, get, store),
         ...createGameSlice(set, get, store),
         ...createAppSlice(set, get, store),
+        ...createEventSlice(set, get, store),
+        ...createMapSlice(set, get, store),
       })),
       {
         name: "commonStore",
