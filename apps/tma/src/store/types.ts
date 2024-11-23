@@ -117,6 +117,8 @@ export interface UserGameSlice {
   hireWorker: (mineId: MineType["id"]) => void;
   tick: () => void;
   init: (coin: number, mCoin: number, mines: Mines) => void;
+  setMCoin: (newMCoin: number) => void;
+  setCoin: (newCoin: number) => void;
 }
 
 export type ImmerStateCreator<

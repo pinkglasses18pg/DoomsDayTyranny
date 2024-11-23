@@ -38,7 +38,7 @@ const Map: React.FC = () => {
 
     const calculateMapHeight = (): number => {
         const maxY = Math.max(...mapData.map((tile) => tile.y));
-        return (maxY + 1.5) * 80; // 78px тайл + 2px отступ
+        return (maxY+1.5) * 80; // 78px тайл + 2px отступ
     };
 
     const getEventForTile = (tileId: string) => {
@@ -55,11 +55,14 @@ const Map: React.FC = () => {
             <TransformWrapper
                 minScale={1}
                 maxScale={1}
+                initialScale={1}
                 initialPositionX={700}
                 initialPositionY={500}
                 centerOnInit={true}
-                wheel={{ step: 50 }}
-                doubleClick={{ disabled: false}} // Отключаем зум на двойной клик, чтобы избежать случайного зума
+                wheel={{ step: 50, disabled: true }} // Disable zooming with the mouse wheel
+                doubleClick={{ disabled: true}} // Отключаем зум на двойной клик, чтобы избежать случайного зума
+                pinch={{ disabled: true }} // Disable zooming with pinch gestures (touch devices)
+                zoomAnimation={{ disabled: true }} // Disable zoom animation
                 panning={{ disabled: false }} // Включаем панорамирование (перетаскивание)
                 limitToBounds={false} // Отключаем ограничения по границам
                 onPanningStop={(ref) => {

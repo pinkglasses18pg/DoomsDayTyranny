@@ -87,14 +87,23 @@ export const InitUser = ({ children }: PropsWithChildren) => {
 
         // Check if userID is in cloudStorage
         const storedUserId = await cloudStorage.get("userId");
+        const storedUserName = await cloudStorage.get("username");
 
         let userId = storedUserId;
+        let username = storedUserName;
 
         // If not in cloudStorage, use the one from initData and store it
         if (!userId && initData?.user?.id) {
           userId = initData.user.id.toString();
           cloudStorage.set("userId", userId);  // Save to cloudStorage
+
         }
+
+        if (!username && initData?.user?.username) {
+          username = initData.user.username.toString();
+          cloudStorage.set("username", username);
+        }
+
 
       const result = await initUserCallback();
 

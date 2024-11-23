@@ -399,6 +399,18 @@ export const createGameSlice: SliceCreator<keyof UserGameSlice> = (
     set({ coin, mCoin, mines });
   },
 
+  setMCoin: (newMCoin: number) => {
+    set((state) => {
+      state.mCoin = newMCoin;
+    });
+  },
+
+  setCoin: (newCoin: number) => {
+    set((state) => {
+      state.coin = newCoin;
+    })
+  },
+
 });
 
 export const isImpossibleMine = (

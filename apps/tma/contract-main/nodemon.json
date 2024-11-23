@@ -1,0 +1,5 @@
+{
+    "watch": ["contracts", "tests"],
+    "ext": "js,ts,json,sol,tact",
+    "exec": "yarn build --all && yarn test"
+}
