@@ -8,6 +8,7 @@ import {useCommonStore} from "@/components/StoreContext.tsx";
 import useHttpsCallable from "@/store/useHttpsCallable";
 import { getFunctions } from "firebase/functions";
 import { app } from "@/store/firebase";
+import {useTranslation} from "react-i18next";
 
 const ReferralConfirmPage: React.FC = () => {
 
@@ -19,6 +20,8 @@ const ReferralConfirmPage: React.FC = () => {
   const navigate = useNavigate();
 
   const [markReferralsAsRead] = useHttpsCallable(getFunctions(app), "markReferralsAsRead");
+
+  const {t} = useTranslation();
 
 
   useEffect(() => {
@@ -50,10 +53,10 @@ const ReferralConfirmPage: React.FC = () => {
           className="w-20 h-20"
         />
       </div>
-      <h1 className="text-2xl mb-2">Congratulations!</h1>
+      <h1 className="text-2xl mb-2">{t("congratulations")}</h1>
       {newReferrals ? (
           <div>
-            <h2>There are new Workers Joined Your Uranium Mine:</h2>
+            <h2>{t("newWorkers")}</h2>
             <ul>
               {newReferrals.map((referral) => (
                   <li key={referral.id}>
@@ -67,7 +70,7 @@ const ReferralConfirmPage: React.FC = () => {
       )}
 
       <button className="bg-yellow-500 text-black rounded-lg px-8 py-3 text-lg hover:opacity-90"
-              onClick={handleTakeReward}>Great</button>
+              onClick={handleTakeReward}>{t("great")}</button>
     </div>
   );
 };

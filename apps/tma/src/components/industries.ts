@@ -6,10 +6,10 @@ import auto from "@/assets/icons/southamerica.svg";
 import space from "@/assets/icons/antarctica_icon.svg";
 
 export const industries = [
-  { icon: electronicIcon, name: "Greenland" },
-  { icon: pharma, name: "North America" },
-  { icon: building, name: "Eurasia" },
-  { icon: weapon, name: "Africa" },
-  { icon: auto, name: "South America" },
-  { icon: space, name: "Antarctica" },
+  { icon: electronicIcon, name: "greenland" },
+  { icon: pharma, name: "northAmerica" },
+  { icon: building, name: "eurasia" },
+  { icon: weapon, name: "africa" },
+  { icon: auto, name: "southAmerica" },
+  { icon: space, name: "antarctica" },
 ];

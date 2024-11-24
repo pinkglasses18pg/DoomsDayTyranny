@@ -1,5 +1,6 @@
 import React from 'react';
 import loadIndicator from "@/assets/icons/loadder.svg";
+import {useTranslation} from "react-i18next";
 
 
 interface ResultScreenProps {
@@ -8,6 +9,8 @@ interface ResultScreenProps {
 }
 
 const ResultScreen: React.FC<ResultScreenProps> = ({ isVictory, onAccept }) => {
+    const { t } = useTranslation();
+
     return (
         <div
             className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50"
@@ -41,8 +44,8 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ isVictory, onAccept }) => {
                 {/* Message */}
                 <p className="text-grayM text-center mb-6">
                     {isVictory
-                        ? 'Objectives accomplished! Leather bags will not stop us. \n Congratulations!'
-                        : 'The AI assistant made a mistake in its calculations, the leather bags outsmarted us. \nYou need to try again.'}
+                        ? t("objectivesAccomplished") + " " + t("leatherBagsNotStopUs") + "\n" + t("congratulations")
+                        : t("aiMistake") + "\n" + t("tryAgain")}
                 </p>
 
                 {/* Accept Button */}
@@ -50,7 +53,7 @@ const ResultScreen: React.FC<ResultScreenProps> = ({ isVictory, onAccept }) => {
                     onClick={onAccept}
                     className="px-6 py-2 bg-whiteM text-darkM font-medium rounded-md shadow-md hover:bg-grayM hover:text-whiteM"
                 >
-                    ACCEPT
+                    {t("accept")}
                 </button>
             </div>
         </div>

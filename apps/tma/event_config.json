@@ -3,7 +3,7 @@
 			"id": "humanArmy_1",
 			"name": "Human Army",
 			"type": "Capture",
-			"description": "The leather bags landed a tank army. According to the information from the reconnaissance drones, there are 20-40 tanks, so we should send our troops there with reserves.",
+			"description": "The meatballs landed a tank army. According to the information from the reconnaissance drones, there are 20-40 tanks, so we should send our troops there with reserves.",
 			"image": "assets/event/humanArmy_1.png",
 			"questImage": "assets/copper.png",
 			"icon": "assets/mapIcons/event_icon_solderst1.svg",

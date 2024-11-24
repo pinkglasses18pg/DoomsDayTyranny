@@ -1,6 +1,6 @@
 import { useCommonStore } from "./StoreContext";
 
-type SoundType = "buyFabric" | "click" | "farm" | "mistake" | "sellResurce" | "switch" | "upgrade";
+type SoundType = "buyFabric" | "click" | "farm" | "mistake" | "sellResurce" | "switch" | "upgrade" | "fight";
 
 export const useSound = (sound: SoundType) => {
   const onSound = useCommonStore((state) => state.onSound);

@@ -127,7 +127,7 @@ export const InitUser = ({ children }: PropsWithChildren) => {
           "sandglass":{"id":"sandglass","store":{"count":0},"maxStore":600,"levelStore":0,"usagePerMinute":0,
             "passive":{"currentSpeedProductiviy":1,"workerCount":0,"fabricGrade":0,"currentProduceTime":16,
               "progress":0,"craftPerMinute":0}}});
-        initializeMap(12, 9, 8, 2);
+        initializeMap(12, 9, 2, 2);
         setAppState({isNewUser: true});
         setAppState({userInitialized: true});
         return;
@@ -158,7 +158,7 @@ export const InitUser = ({ children }: PropsWithChildren) => {
           const mapData_ = JSON.parse(result.data.mapData);
           setMapData(mapData_);
         } else {
-          initializeMap(12, 9, 8, 2);
+          initializeMap(12, 9, 2, 2);
         }
 
         if (!mines) throw new Error("Invalid gameStats");
@@ -183,8 +183,22 @@ export const InitUser = ({ children }: PropsWithChildren) => {
         if (result_check && result_check.data) {
           console.log("New referrals:", result_check.data);
 
-          if (result_check.data.newReferrals && result_check.data.newReferrals.length > 0) {
+          if (result_check.data.newReferrals && result_check?.data?.newReferrals?.length > 0) {
             try {
+              // Fetch existing referrals from cloudStorage
+              const existingReferralsJson = await cloudStorage.get("referrals");
+              const existingReferrals = existingReferralsJson
+                  ? JSON.parse(existingReferralsJson) // Parse JSON if data exists
+                  : [];
+
+              // Add new referrals to the existing list
+              const updatedReferrals = [
+                ...existingReferrals,
+                ...result_check.data.newReferrals.map((ref) => ref.username),
+              ];
+
+              // Save updated referrals list to cloudStorage
+              await cloudStorage.set("referrals", JSON.stringify(updatedReferrals));
 
               setAppState({newReferrals: result_check.data.newReferrals});
 

@@ -49,7 +49,7 @@ const Production = () => {
                       </div>
 
                       <div className="flex flex-col items-end justify-between">
-                        <span className="text-2xs text-grayM">Stock</span>
+                        <span className="text-2xs text-grayM">{t("stock")}</span>
                         <span className="text-white">
                           {abbreviateNumber(mine.store.count)}
                         </span>

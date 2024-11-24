@@ -304,7 +304,7 @@ async function readConfigData() {
 async function writeConfigData() {
   try {
     // Read config.json file
-    const configData = JSON.parse(fs.readFileSync('./config_2309.json', 'utf8'));
+    const configData = JSON.parse(fs.readFileSync('./config_0710.json', 'utf8'));
     const dataToWrite = { config: configData };
 
     console.log("this is data: ", dataToWrite);
@@ -384,4 +384,4 @@ async function readUserData2() {
   }
 }
 
-await writeEventConfigData();
+await writeConfigData();

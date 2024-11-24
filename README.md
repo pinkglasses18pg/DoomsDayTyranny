@@ -96,8 +96,18 @@ Learn more about the power of Turborepo:
   - cd apps/tma
   - npm run dev
 - Ngrok:
-  - ngrok http 3005
+  - ngrok http --subdomain=miracle 3005
 
 ### Log:
 
 - npx firebase-logging --project=telegram-miracle-f1779 --freq=1500
+
+### for file structure:  
+- tree -L 6 -I "my-turborepo|node_modules|dist|__mocks__|public|assets"
+
+### if port 8080 is taken:  
+- lsof -ti tcp:8080 | xargs kill -9  
+
+# SMART-CONTRACT:  
+- folder: apps/tma/contract-main/  
+- Smart Contract Address: EQB1CkNR_HLy1J6hw2cHStDsKIHCS3YKRsRumNOnIdE5UKjD  

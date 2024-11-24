@@ -8,13 +8,13 @@ import {useCommonStore} from "@/components/StoreContext.tsx";
 //import offer_icon from "@assets/offer.svg";
 
 const CryptoPage: React.FC = () => {
-    const { t } = useTranslation();
     const [tonConnectUI] = useTonConnectUI();
     const mCoin = useCommonStore((state) => state.mCoin);
     const coin = useCommonStore((state) => state.coin);
     const increaseMCoin = useCommonStore((state) => state.setMCoin);
     const setMCoin = useCommonStore((state) => state.setMCoin);
     const increaseCoin = useCommonStore((state) => state.setCoin);
+    const { t } = useTranslation();
 
 
     // Offer details
@@ -40,14 +40,15 @@ const CryptoPage: React.FC = () => {
                 messages: [
                     {
                         address: receiverAddress, // Address to send stars
-                        amount: (offerAmount * 1e9).toString(), // Convert stars to nanotons
-                        payload: `Buy ${ddt} DDT`, // Transaction description
+                        amount: "100000000", // Convert stars to nanotons
                     },
                 ],
             };
 
+            console.log("transactionPayload : ", transactionPayload );
+
             await tonConnectUI.sendTransaction(transactionPayload);
-            alert(`Purchase successful! You bought ${ddt} DDT for ${offerAmount} Telegram stars.`);
+            alert(`Purchase successful! ${offerAmount} Ton.`);
 
             // Increase user's mCoin state
             increaseMCoin(mCoin + ddt);
@@ -64,7 +65,7 @@ const CryptoPage: React.FC = () => {
         if (mCoin >= exchangeRate) {
             // Deduct 1 DDT and add 1 Coin
             setMCoin(mCoin - exchangeRate);
-            increaseCoin(coin + exchangeRate);
+            increaseCoin(coin + 1073741824);
             alert(`Exchange successful! 1 DDT exchanged for 1 Coin.`);
         } else {
             alert(`Not enough DDT to exchange. You need at least 1 DDT.`);
@@ -75,7 +76,7 @@ const CryptoPage: React.FC = () => {
         <div className="flex flex-col h-screen w-full bg-darkM text-white p-1">
             {/* Buy Coin Section */}
             <div className="flex flex-col flex-shrink-0">
-                <h2 className="text-lg font-bold mb-0">{t("Buy coin")}</h2>
+                <h2 className="text-lg font-bold mb-0">{t("buyCoin")}</h2>
                 <hr className="border-t border-gray-600 mb-0" />
                 <div className="flex flex-col gap-0">
                     {offers.map((offer) => (
@@ -98,7 +99,7 @@ const CryptoPage: React.FC = () => {
 
             {/* Currency Exchange */}
             <div className="flex flex-col flex-shrink-0 mt-0">
-                <h2 className="text-lg font-bold mb-0">{t("Currency exchange")}</h2>
+                <h2 className="text-lg font-bold mb-0">{t("currencyExchange")}</h2>
                 <hr className="border-t border-gray-600 mb-0" />
                 <div className="flex justify-between rounded-md p-1 shadow-md">
                     <img
@@ -109,14 +110,14 @@ const CryptoPage: React.FC = () => {
                     onClick={handleExchange}>
                         <img src="assets/exchange_button.svg" alt="Exchange Button"
                              className="absolute w-full h-full"/>
-                        <span className="relative text-black font-bold">{t("Exchange")}</span>
+                        <span className="relative text-black font-bold">{t("exchange")}</span>
                     </button>
                 </div>
             </div>
 
             {/* Wheel of Fortune */}
             <div className="flex flex-col flex-shrink-0 mt-0">
-                <h2 className="text-lg font-bold mb-1">{t("Wheel of Fortune")}</h2>
+                <h2 className="text-lg font-bold mb-1">{t("wheelOfFortune")}</h2>
                 <hr className="border-t border-gray-600 mb-0" />
                 <div className="flex items-center justify-center rounded-md p-1 shadow-md">
                     <img

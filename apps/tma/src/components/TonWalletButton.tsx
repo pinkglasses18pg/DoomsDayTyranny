@@ -2,6 +2,8 @@ import { useTonConnectUI } from "@tonconnect/ui-react";
 import { FC, useState, useEffect } from "react";
 import buttonImg from "@/assets/button_ivent_white_big.svg";
 import { useCloudStorage } from "@tma.js/sdk-react";
+import {useTranslation} from "react-i18next";
+
 
 const TonWalletButton: FC = () => {
     const [tonConnectUI] = useTonConnectUI();
@@ -9,6 +11,7 @@ const TonWalletButton: FC = () => {
     const [walletAddress, setWalletAddress] = useState<string | null>(null);
     const [username, setUsername] = useState<string | null>(null);
     const cloudStorage = useCloudStorage();
+    const { t } = useTranslation();
 
 
     useEffect(() => {
@@ -117,7 +120,7 @@ const TonWalletButton: FC = () => {
                         pointerEvents: "none", // Make the text unclickable
                     }}
                 >
-                    {walletConnected ? "Disconnect TON Wallet" : "Connect TON Wallet"}
+                    {walletConnected ? t("changeTONWallet") : t("connectTONWallet")}
                 </span>
             </button>
 

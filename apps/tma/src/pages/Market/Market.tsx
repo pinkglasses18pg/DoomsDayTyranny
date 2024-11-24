@@ -3,6 +3,7 @@
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 import { useCommonStore } from "@/components/StoreContext";
+import evenIcon from "@/assets/icons/icon_event.png"
 
 const Market = () => {
   const { t } = useTranslation();
@@ -35,20 +36,12 @@ const Market = () => {
             >
               <img
                   className="h-full w-full z-10"
-                  src={event.questImage} // Event icon
+                  src={evenIcon} // Event icon
                   alt={event.name}
               />
               <div className="flex flex-col justify-center gap-3 px-2.5">
                 <span className="text-2xs text-darkGrayM">{t("event")}</span>
                 <span className="text-white text-xs">{t(event.name)}</span>
-              </div>
-              <div className="flex flex-col justify-center items-end gap-3 px-2.5">
-                <span className="text-darkGrayM text-2xs px-4">{t("reward")}:</span>
-                <div className="flex gap-2">
-              <span className="text-white text-xs">
-                {event.rewards.hardReward} Hard Currency
-              </span>
-                </div>
               </div>
             </Link>
         ))}

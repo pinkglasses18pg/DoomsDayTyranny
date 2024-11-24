@@ -1,12 +1,12 @@
 {
-  "factory": "Factory",
+   "factory": "Factory",
   "price": "Price",
   "industry": "Region",
   "electronics": "Greenland",
   "production": "Factories",
   "market": "Market",
   "tenders": "Tenders",
-  "community": "Community",
+  "community": "Community"
 
   "stoke": "Stoke",
   "tools": "Tools",
@@ -17,7 +17,9 @@
   "expense": "Expense",
   "buy": "Buy",
   "sell": "Sell",
-
+  
+  "industry": "Region",
+  "electronics": "Greenland",
   "pharmaceuticals":"Pharmaceuticals",
   "building":"Events",
   "weapon":"Weapon",
@@ -35,7 +37,6 @@
   "english2":"English",
   "russian":"Russian",
   "russian2":"Русский",
-  "language": "language",
  
   "sand": "Oil",
   "sandFactory": "Oil production",
@@ -96,75 +97,63 @@
   "alphaChannel": "Alpha Channel",
   "alphaChannelDescription": "Get exclusive insider information here!",
   "friends": "Friends",
-  "inviteFriendReward": "Invite one friend to unlock the uranium mine! Bring more friends to boost factory productivity and speed up your progress!",
-  "invite": "How to unlock it? Invite 1 friend!",
+  "workers": "Workers",
+  "inviteFriendReward": "Invite 1 friend to unlock the uranium mine",
+  "invite": "Invite",
   "inviteFriends": "Invite Friends",
-  "Link_Shared": "Link Shared!",
   "copyLink": "Copy Link",
-  "copied": "Copied!",
-  "Workers": "Workers",
-  "meatballs": "Meatballs",
-  "dontHaveUranus": "Uranus is unavailable.",
-  "Price": "Price",
-  "Uranus": "Uranus",
-  "Factory": "Factory",
-  "Friends": "Secret Fabric",
-
+  
   "congratulations": "Congratulations!",
   "newWorkers": "There are new Workers Joined Your Uranium Mine:",
   "great": "Great",
-
-  "workAtUraniumMine": "You have been enslaved by artificial intelligence. Now you work for the benefit of AI in the uranium mine of player ",
+  
+  "congratulations": "Congratulations!",
+  "workAtUraniumMine": "You have been enslaved by AI. Now you work at the uranium mine of the player",
   "yourReward": "Your reward",
   "take": "Take",
+  
+  "humanArmy": "Human Army",
+  "description": "The meatbags landed a tank army. According to the information from the reconnaissance drones, there are 20-40 tanks, so we should send our troops there with reserves.",
+  "reward": "Reward",
+  "need": "Need",
+  "data": "Data",
+  "stock": "Stock",
+  "chance": "Chance",
+  "notAvailable": "NOT AVAILABLE",
+  "try": "Try: 0",
+  
+  "capture": "Capture",
+  
+  "buyCoin": "Buy coin",
+  "currencyExchange": "Currency exchange",
+  "wheelOfFortune": "Wheel of Fortune",
+  "connectTONWallet": "Connect TON wallet",
+  "exchange": "Exchange",
+  
+  "changeTONWallet": "Disconnect TON wallet",
+  
+  "defeat": "Defeat",
+  "aiMistake": "The AI assistant made a mistake in its calculations, the meatbags outsmarted us.",
+  "tryAgain": "You need to try again",
+  "accept": "Accept",
+  
+  "victory": "Victory",
+  "objectivesAccomplished": "Objectives accomplished!",
+  "leatherBagsNotStopUs": "Meatbags will not stop us.",
+  "congratulations": "Congratulations!",
+  "accept": "Accept",
+  
   "loading": "Loading...",
-  "RewardClaimed": "Reward Claimed",
-
+  
   "greenland": "Greenland",
   "northAmerica": "North America",
   "eurasia": "Eurasia",
   "africa": "Africa",
   "southAmerica": "South America",
   "antarctica": "Antarctica",
-
-  "buyCoin": "Buy coin",
-  "currencyExchange": "Currency exchange",
-  "wheelOfFortune": "Wheel of Fortune",
-  "connectTONWallet": "Connect TON wallet",
-  "exchange": "Exchange",
-  "changeTONWallet": "Disconnect TON wallet",
-
-  "Human Army": "Human Army",
-  "Tank army": "Tank army",
-  "human Army 2": "human Army 2",
-  "Iron factory": "Iron factory",
-  "Engine factory": "Engine factory",
-  "Gun factory": "Gun factory",
-  "Terminator factory": "Terminator factory",
-  "event" : "event",
-
-  "need": "Need",
-  "data": "Data",
-  "stock": "Stock",
-  "chance": "Chance",
-  "notAvailable": "NOT AVAILABLE",
-  "try": "Try",
-  "capture": "CAPTURE",
-  "notClose": "You are too far away, move closer!",
-  "close": "Close",
-  "youHave": "You have:",
-
-  "defeat": "Defeat",
-  "aiMistake": "The AI assistant made a mistake in its calculations, the meatbags outsmarted us.",
-  "tryAgain": "You need to try again",
-  "accept": "Accept",
-
-  "victory": "Victory",
-  "objectivesAccomplished": "Objectives accomplished!",
-  "leatherBagsNotStopUs": "Meatbags will not stop us.",
-
-  "The meatballs landed a tank army. According to the information from the reconnaissance drones, there are 20-40 tanks, so we should send our troops there with reserves.": "The meatballs landed a tank army. According to the information from the reconnaissance drones, there are 20-40 tanks, so we should send our troops there with reserves.",
-  "Time to conquer and destroy this human army!": "Time to conquer and destroy this human army!",
-  "Time to conquer and destroy those human tanks!": "Time to conquer and destroy those human tanks!",
-  "Build factory": "Build factory"
+  "factory": "Factory:",
+  "gameSettings": "Game settings",
+  "tutorial": "Tutorial"
+  
+  
 }

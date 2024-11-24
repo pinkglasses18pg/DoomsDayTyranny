@@ -82,14 +82,14 @@ export const Header = () => {
             <span className="text-white text-bold text-3xl">?</span>
             <span className="ml-5 text-white">{t("tutorial")}</span>
           </Button>
-        </div>industries
+        </div>
       </Drawer>
 
       <Button onClick={toggleDrawer}>
         <img src={burger} className="w-7 h-7" />
       </Button>
 
-      <div className="flex items-center">
+      <div className="flex items-center px-2">
         <img src={chip} className="w-5 h-5" />
 
         <div className="flex flex-col px-1 text-darkGrayM -ml-px bg-grayBGM">

@@ -41,7 +41,7 @@ const db = getDatabase();
 async function writeConfigData() {
   try {
     // Read config.json file
-    const configData = JSON.parse(fs.readFileSync('./config_2309.json', 'utf8'));
+    const configData = JSON.parse(fs.readFileSync('./config_0710.json', 'utf8'));
 
     console.log("this is data: ", configData);
 
@@ -92,4 +92,4 @@ async function writeEventConfigData() {
 }
 
 // Call the function to write/update data
-writeEventConfigData();
+writeConfigData();

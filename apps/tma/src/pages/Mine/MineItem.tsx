@@ -48,6 +48,7 @@ const BaseProduction = React.memo(({
   resource: ConfigItem;
   isBought: boolean;
 }) => {
+  const sellPrice = resource.sellPrice;
   return (
     <div className="flex flex-col h-full w-full text-gray-200 items-center">
       <MineHeader resourceId={resource.resource.id} />
@@ -58,7 +59,7 @@ const BaseProduction = React.memo(({
 
       <MineInfo resource={resource} />
 
-      {isBought ? <SellAll resource={resource} /> : <BuyMine mine={resource} />}
+      {sellPrice > 0 && (isBought ? <SellAll resource={resource} /> : <BuyMine mine={resource} />)}
     </div>
   );
 });

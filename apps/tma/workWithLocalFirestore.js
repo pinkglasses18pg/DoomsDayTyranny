@@ -476,4 +476,4 @@ await writeConfigData();
 
 await createUserData();
 
-//await createForTestParentReferral();
+await createForTestParentReferral();

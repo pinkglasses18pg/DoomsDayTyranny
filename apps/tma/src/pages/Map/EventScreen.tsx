@@ -8,6 +8,10 @@ import {useCommonStore} from "@/components/StoreContext.tsx";
 import {useSound} from "@/components/sound.ts";
 import {LoadIndicator} from "@/components/LoadIndicator.tsx";
 import { abbreviateBytes } from "../utils";
+import { useTranslation } from "react-i18next";
+
+import ActivateButton from "@/assets/button_ivent_active.svg";
+import InactiveButton from "@/assets/button_ivent_inactive.svg";
 
 interface EventScreenProps {
     tile: TileType;
@@ -32,12 +36,13 @@ const EventScreen: React.FC<EventScreenProps> = ({
     const completeEvent = useCommonStore((state) => state.completeEvent);
     const incrementTileAttempts = useCommonStore((state) => state.incrementTileAttempts);
     const takeRewards = useCommonStore((state) => state.takeRewards);
-    const soundInstance = useSound("buyFabric");
+    const soundInstance = useSound("fight");
     const generateEventsForMap = useCommonStore((state) => state.generateEventsForMap);
     const updateTileOwner = useCommonStore((state) => state.updateTileOwner);
     const isTileNeighborOfPlayer = useCommonStore((state) => state.isTileNeighborOfPlayer);
 
     const [isLoading, setIsLoading] = useState(false);
+    const { t } = useTranslation();
 
 
     // Можно ли вообще войти в событие?
@@ -80,11 +85,18 @@ const EventScreen: React.FC<EventScreenProps> = ({
 
     const calculateChance = () => {
         if (!event) return 0;
-        return (event.difficulty.baseChance + tile.attempts * event.difficulty.tryMultiplay) * 100; // Convert to percentage
+        const chance = (event.difficulty.baseChance + tile.attempts * event.difficulty.tryMultiplay) * 100; // Convert to percentage
+        return Math.round(chance);
     };
 
     const isEventAvailable =(event: EventType) => {
       return (isCraftable && coins >= event.price && isTileNeighborOfPlayer(tile.id))
+    };
+
+    const isEnoughResource = (req: any) => {
+        const userResourceCount = mines[req.id]?.store.count ?? 0;
+        const isEnough = userResourceCount >= req.count;
+            return ( isEnough)
     };
 
     if (!event) {
@@ -121,98 +133,193 @@ const EventScreen: React.FC<EventScreenProps> = ({
         );
     }
 
-    return (
-        <>
-            {isLoading ? (
-                <LoadIndicator />
-            ) : (
+return (
+    <>
+        {isLoading ? (
+            <LoadIndicator />
+        ) : (
+    <div
+        className="event-screen"
+        style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+            backgroundColor: 'rgba(0,0,0,0.8)',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            overflowY: "auto",
+            scrollBehavior: "smooth",
+            zIndex: 1000,
+            paddingTop: '0px', // Отступ сверху
+        }}
+        onClick={onClose}
+    >
         <div
-            className="event-screen"
+            className="event-content"
             style={{
-                position: 'fixed',
-                top: 0,
-                left: 0,
-                width: '100%',
-                height: '100%',
-                backgroundColor: 'rgba(0,0,0,0.5)',
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                zIndex: 1000,
+                backgroundColor: "#1F1F1F",
+                color: '#fff',
+                padding: '20px',
+                borderRadius: '12px',
+                maxWidth: "600px",
+                display: "flex",
+                flexDirection: "column",
+                gap: "10px",
+                position: "relative",
+                marginTop: '100px',
             }}
-            onClick={onClose}
+            onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
         >
-            <div
-                style={{
-                    backgroundColor: "#1F1F1F",
-                    color: '#fff',
-                    padding: '20px',
-                    borderRadius: '8px',
-                    width: '90%',
-                    maxWidth: '500px',
-                }}
-                onClick={(e) => e.stopPropagation()} // Prevent closing when clicking inside
-            >
+            <img
+                src={event.image}
+                alt={event.name}
+                style={{width: '100%', height: "auto", marginBottom: '10px', objectFit: 'contain'}}
+            />
+            <h2 style={{fontSize: "36px", display: "flex", alignItems: "center"}}>
                 <img
-                    src={event.image}
-                    alt={event.name}
-                    style={{ width: '100%', marginBottom: '20px', borderRadius: '8px' }}
+                    src={event.icon}
+                    alt="Icon for Name"
+                    style={{width: "84px", height: "84px"}}
                 />
-                <h2>{event.name}</h2>
-                <p>{event.description}</p>
-                <p><strong>Owner:</strong> {tile.owner}</p>
+                {t(event.name)}</h2>
 
-                <h3>Requirements:</h3>
-                 <ul
-                     style={{
-                         display: "flex",
-                         flexDirection: "row",
-                         gap: "10px", // Optional: Add some spacing between items
-                         listStyleType: "none", // Remove bullet points
-                         padding: 0, // Remove default padding
-                         margin: 0, // Remove default margin
-                     }}
-                 >
-                     {event?.craftEvent.map((req) => (
-                         <li key={req.id} >
-                             < Link to={`/mine/${req.id}`} style={{textDecoration: "none", color: "#4CAF50"}}>
-                                 <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
-                                     <img src={req.image} alt={req.id}/>
-                                     <span style={{fontSize: "14px", textAlign: "center"}}>
-                         {(mines[req.id]?.store.count ?? 0)}/{req.count} {/* Show available resources */}
-                         </span>
-                                 </div>
-                             </Link>
-                         </li>
-                     ))}
-                </ul>
-                <p><strong>Soft Currency Cost:</strong> {abbreviateBytes(event.price)} (You have: {abbreviateBytes(coins)})</p>
-                <p><strong>Chance:</strong> {calculateChance()}%</p>
+            <p style={{fontSize: "14px", marginBottom: "20px"}}>{t(event.description)}</p>
+            {/*<p><strong>Owner:</strong> {tile.owner}</p>*/}
 
-                <button
-                    onClick={handleCraft}
-                    disabled={!isEventAvailable(event)}
+            <h3>{t("need")}:</h3>
+            <hr className="border-t border-gray-600 mb-0"/>
+            <div className="flex flex-col flex-shrink-0 mt-0">
+                <ul
                     style={{
-                        padding: '10px 20px',
-                        backgroundColor: isEventAvailable(event) ? '#4CAF50' : '#ccc',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '4px',
-                        cursor: isEventAvailable(event) ? 'pointer' : 'not-allowed',
+                        display: "flex",
+                        flexDirection: "row",
+                        gap: "10px", // Optional: Add some spacing between items
+                        listStyleType: "none", // Remove bullet points
+                        padding: 0, // Remove default padding
+                        margin: 0, // Remove default margin
                     }}
                 >
-                    {isEventAvailable(event) ? 'Capture' : 'Not Available'}
-                </button>
-                <p style={{ marginTop: '10px' }}>Try: {tile.attempts}</p>
-
-                <button onClick={onClose} style={{ marginTop: '20px' }}>
-                    Close
-                </button>
+                    {event?.craftEvent.map((req) => (
+                        <li key={req.id}>
+                            < Link to={`/mine/${req.id}`} style={{
+                                textDecoration: "none",
+                                color: (isEnoughResource(req)) ? "#4CAF50" : "#FF4D4D"
+                            }}>
+                                <div style={{display: "flex", flexDirection: "column", alignItems: "center"}}>
+                                    <img src={req.image} alt={req.id}/>
+                                    <span style={{fontSize: "14px", textAlign: "center"}}>
+                     {(mines[req.id]?.store.count ?? 0)}/{req.count} {/* Show available resources */}
+                     </span>
+                                </div>
+                            </Link>
+                        </li>
+                    ))}
+                </ul>
             </div>
-        </div>
+            <p><strong>{t("data")}:</strong></p>
+            <hr className="border-t border-gray-600 mb-0"/>
+            <p style={{
+                textAlign: 'center',
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                gap: "10px"
+            }}>
+                <img
+                    src="./assets/icons/soft.svg"
+                    alt="Icon for Price"
+                    style={{width: "20px", height: "20px"}}
+                />
+                {abbreviateBytes(event.price)} ({t("youHave")}
+                <span
+                    style={{
+                        color: event.price <= coins ? "inherit" : "#FF4D4D", // Если недостаточно монет, текст станет красным
+                    }}
+                >
+                {abbreviateBytes(coins)}
+            </span>
+                )
+
+            </p>
+            <p style={{textAlign: 'center'}}><strong>{t("chance")}:</strong> {calculateChance()}%</p>
+
+            <button
+                onClick={handleCraft}
+                disabled={!isEventAvailable(event)}
+                style={{
+                    position: "relative", // Make the button a relative container
+                    display: "inline-block", // Ensure inline-block behavior
+                    border: "none", // Remove border
+                    borderRadius: "8px", // Optional: Add rounded corners
+                    padding: 0, // Remove padding
+                    cursor: isEventAvailable(event) ? "pointer" : "not-allowed", // Set cursor style
+                    background: "transparent", // No background color
+                }}
+            >
+                <img
+                    src={isEventAvailable(event) ? ActivateButton : InactiveButton}
+                    style={{
+                        width: "100%", // Make the image fill the button width
+                        height: "100%", // Make the image fill the button height
+                        objectFit: "cover", // Ensure the image covers the entire area
+                        opacity: isEventAvailable(event) ? 1 : 0.5, // Adjust opacity for availability
+                        transition: "opacity 0.3s", // Smooth opacity transition
+                        borderRadius: "8px", // Optional: Match the button's border radius
+                    }}
+                />
+                <span
+                    style={{
+                        position: "absolute", // Position the text absolutely inside the button
+                        top: "50%", // Vertically center the text
+                        left: "50%", // Horizontally center the text
+                        transform: "translate(-50%, -50%)", // Centering trick
+                        color: isEventAvailable(event) ? "#fff" : "#767676", // Text color based on availability
+                        fontWeight: "900", // Make the text bold
+                        fontSize: "24px", // Adjust text size
+                        textAlign: "center", // Center-align the text
+                        textShadow: "1px 1px 2px rgba(0, 0, 0, 0.8)", // Add subtle shadow for readability
+                        pointerEvents: "none", // Ensure text does not block button clicks
+                    }}
+                >
+                    {isEventAvailable(event) ? t('capture') : t('notAvailable')}
+                        </span>
+            </button>
+            {!isTileNeighborOfPlayer(tile.id) && (
+            <span
+                style={{
+                    textAlign: "center", // Center-align the text
+                    color: "#FF4D4D",
+                }}
+
+            >
+                {t("notClose")}
+            </span>
             )}
-        </>
-    );
+            <p style={{marginTop: '10px', textAlign: 'center'}}>{t("try")}: {tile.attempts}</p>
+
+            <button onClick={onClose}
+                    style={{
+                        marginTop: '20px',
+                        left: "20px",
+                        backgroundColor: "#757575",
+                        border: "none",
+                        transition: "background-color 0.3s ease",
+                        borderRadius: "12px",
+                        cursor: "pointer",
+                        position: "absolute",
+                        bottom: "20px",
+                        padding: "1px 5px",
+                    }}>
+                {t("close")}
+            </button>
+        </div>
+    </div>
+        )}
+    </>
+);
 };
 
 export default EventScreen;

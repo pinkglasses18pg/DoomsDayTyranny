@@ -8,6 +8,7 @@ import { getFunctions } from "firebase/functions";
 import useHttpsCallable from "@/store/useHttpsCallable";
 import { app } from "@/store/firebase";
 import { useCommonStore } from "@/components/StoreContext";
+import {useTranslation} from "react-i18next";
 
 const InvitePage: React.FC = () => {
   const mines = useCommonStore((state) => state.mines);
@@ -34,6 +35,8 @@ const InvitePage: React.FC = () => {
 
     const [isClaimed, setIsClaimed] = useState<boolean>(false);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const {t} = useTranslation();
 
   const fetchUser = useCallback(async () => {
     if (!isReaded && referralCode) {
@@ -133,13 +136,13 @@ const InvitePage: React.FC = () => {
       </div>
       <h1 className="text-2xl mb-2">Congratulations!</h1>
       {referralCode ? (
-        <h1>Now you work at the uranium mine of the player
+        <h1>{t("workAtUraniumMine")}
           <span className="text-yellow-500">{userData?.user?.username || null}</span>
         </h1>
         ) : (
         <h1>No referral code available.</h1>
       )}
-      <p className="text-lg mb-1">Your reward</p>
+      <p className="text-lg mb-1">{t("yourReward")}</p>
       <p className="text-5xl font-bold text-white mb-10">666 ¥</p>
         <button
             className={`bg-yellow-500 text-black rounded-lg px-8 py-3 text-lg ${
@@ -148,7 +151,7 @@ const InvitePage: React.FC = () => {
             onClick={handleTakeReward}
             disabled={isClaimed} // Disable button after claim
         >
-            {isClaimed ? "Reward Claimed" : isLoading ? "Loading..." : "Take"}
+            {isClaimed ? t("RewardClaimed") : isLoading ? t("loading") : t("take")}
         </button>
     </div>
   );
