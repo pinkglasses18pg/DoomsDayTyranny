@@ -111,3 +111,5 @@ Learn more about the power of Turborepo:
 # SMART-CONTRACT:  
 - folder: apps/tma/contract-main/  
 - Smart Contract Address: EQB1CkNR_HLy1J6hw2cHStDsKIHCS3YKRsRumNOnIdE5UKjD  
+- OPEN-SOURCE CONTRACT LINK:
+  https://github.com/pinkglasses18pg/DoomsDayToken
