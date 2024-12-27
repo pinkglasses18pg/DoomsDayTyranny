@@ -1,0 +1,29 @@
+Business Source License 1.1
+
+Copyright (c) 2024, Doomsday Tyranny Game
+
+Licensed Work: Doomsday Tyranny — a strategy game developed as a Telegram Mini App.
+
+
+Change Date: [Дата, после которой лицензия станет открытой, например: "2028-11-15"]
+
+The Licensed Work is provided under the terms of the Business Source License 1.1 (the "License"). Any use of the Licensed Work, other than as expressly stated under this license, requires a separate commercial license from the Licensor. 
+
+Terms:
+
+1. **Non-Commercial Use Only:** 
+   You may use the Licensed Work for any non-commercial purpose, including personal, academic, or testing purposes.
+
+2. **Change Date:** 
+   On the Change Date specified above, the Licensed Work will automatically be made available under [Alternative License, например: "Apache 2.0"]. Until that date, it is governed exclusively by the terms of this License.
+
+3. **Attribution:** 
+   Any distribution of the Licensed Work must include this license and attribution to the original author(s).
+
+4. **No Warranty:**
+   The Licensed Work is provided "as is," without warranty of any kind, express or implied, including but not limited to warranties of merchantability, fitness for a particular purpose, or non-infringement.
+
+5. **Prohibited Uses:** 
+   Commercial use of the Licensed Work without a separate commercial license is prohibited. This includes, but is not limited to, use in production environments, reselling, or offering services derived from the Licensed Work.
+
+For any questions or requests for a commercial license, please contact: [Ваш контактный email или сайт]

@@ -6,3 +6,5 @@ node_modules/
 package-lock.json
 apps/tma/.turbo/
 .turbo/
+/apps/tma/serviceAccountKey.json
+serviceAccountKey.json
